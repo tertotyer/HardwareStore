@@ -11,7 +11,6 @@ namespace HardwareStore.Data
             using var context =
                 new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
 
-
             if (context == null || context.Entity == null || context.Roles == null)
             {
                 throw new ArgumentNullException("Null context");
@@ -24,7 +23,6 @@ namespace HardwareStore.Data
                     new IdentityRole { Name = "admin", NormalizedName = "ADMIN" }
                     );
             }
-
 
             if (!context.Entity.Any())
             {

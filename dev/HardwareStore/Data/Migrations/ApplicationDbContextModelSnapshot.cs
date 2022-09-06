@@ -30,18 +30,15 @@ namespace HardwareStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("EntityID")
+                    b.Property<int>("EntityId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TitleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("EntityID");
+                    b.HasIndex("EntityId");
 
                     b.ToTable("Category");
                 });
@@ -115,14 +112,10 @@ namespace HardwareStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ModelName")
-                        .IsRequired()
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -338,7 +331,9 @@ namespace HardwareStore.Data.Migrations
                 {
                     b.HasOne("HardwareStore.Models.Entity", "Entity")
                         .WithMany("Categories")
-                        .HasForeignKey("EntityID");
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Entity");
                 });
@@ -369,7 +364,9 @@ namespace HardwareStore.Data.Migrations
                 {
                     b.HasOne("HardwareStore.Models.Category", "Category")
                         .WithMany("Things")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
                 });

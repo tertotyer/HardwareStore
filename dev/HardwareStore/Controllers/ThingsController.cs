@@ -22,7 +22,8 @@ namespace HardwareStore.Controllers
         // GET: Things
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Thing.ToListAsync());
+            var applicationDbContext = _context.Thing.Include(t => t.Category);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Things/Details/5
@@ -34,6 +35,7 @@ namespace HardwareStore.Controllers
             }
 
             var thing = await _context.Thing
+                .Include(t => t.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thing == null)
             {
@@ -44,8 +46,10 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Things/Create
-        public IActionResult Create()
+        public IActionResult Create(int sendCategoryId)
         {
+            ViewData["SendCategoryId"] = sendCategoryId;
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
             return View();
         }
 
@@ -54,7 +58,7 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ModelName,EntityId")] Thing thing)
+        public async Task<IActionResult> Create([Bind("Id,Name,CategoryId")] Thing thing)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +66,7 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
             return View(thing);
         }
 
@@ -78,6 +83,7 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
             return View(thing);
         }
 
@@ -86,7 +92,7 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ModelName,EntityId")] Thing thing)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,CategoryId")] Thing thing)
         {
             if (id != thing.Id)
             {
@@ -113,6 +119,7 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
             return View(thing);
         }
 
@@ -125,6 +132,7 @@ namespace HardwareStore.Controllers
             }
 
             var thing = await _context.Thing
+                .Include(t => t.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thing == null)
             {

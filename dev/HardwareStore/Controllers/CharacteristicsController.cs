@@ -46,9 +46,10 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Characteristics/Create
-        public IActionResult Create()
+        public IActionResult Create(int sendThingId)
         {
-            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "ModelName");
+            ViewData["SendThingId"] = sendThingId;
+            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name");
             return View();
         }
 
@@ -65,7 +66,7 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "ModelName", characteristic.ThingId);
+            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", characteristic.ThingId);
             return View(characteristic);
         }
 
@@ -82,7 +83,7 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "ModelName", characteristic.ThingId);
+            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", characteristic.ThingId);
             return View(characteristic);
         }
 

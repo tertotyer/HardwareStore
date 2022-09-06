@@ -17,10 +17,7 @@
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ThingId" class="control-label"></label>
-                <select asp-for="ThingId" class ="form-control" asp-items="ViewBag.ThingId"></select>
-            </div>
+            <input type="hidden" asp-for="ThingId" value="@ViewBag.SendThingId" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

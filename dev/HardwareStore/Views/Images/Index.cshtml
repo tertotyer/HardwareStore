@@ -6,9 +6,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -28,7 +25,7 @@
                 @Html.DisplayFor(modelItem => item.ImagePath)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Thing.ModelName)
+                @Html.DisplayFor(modelItem => item.Thing.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
