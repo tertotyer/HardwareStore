@@ -7,29 +7,34 @@ using System;
 namespace HardwareStore.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class RoleController : Controller
+    public class AdminController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public AdminController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ShowRoles()
         {
             return View(await _roleManager.Roles.ToListAsync());
         }
 
-        public IActionResult Create()
+        public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name")] IdentityRole role)
+        public async Task<IActionResult> CreateRole([Bind("Name")] IdentityRole role)
         {
             if (ModelState.IsValid)
             {

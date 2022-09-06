@@ -22,8 +22,7 @@ namespace HardwareStore.Controllers
         // GET: Things
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Thing.Include(t => t.Entity);
-            return View(await applicationDbContext.ToListAsync());
+              return View(await _context.Thing.ToListAsync());
         }
 
         // GET: Things/Details/5
@@ -35,7 +34,6 @@ namespace HardwareStore.Controllers
             }
 
             var thing = await _context.Thing
-                .Include(t => t.Entity)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thing == null)
             {
@@ -48,7 +46,6 @@ namespace HardwareStore.Controllers
         // GET: Things/Create
         public IActionResult Create()
         {
-            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Id");
             return View();
         }
 
@@ -65,7 +62,6 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Id", thing.EntityId);
             return View(thing);
         }
 
@@ -82,7 +78,6 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Id", thing.EntityId);
             return View(thing);
         }
 
@@ -118,7 +113,6 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Id", thing.EntityId);
             return View(thing);
         }
 
@@ -131,7 +125,6 @@ namespace HardwareStore.Controllers
             }
 
             var thing = await _context.Thing
-                .Include(t => t.Entity)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thing == null)
             {

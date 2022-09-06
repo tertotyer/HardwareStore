@@ -12,7 +12,7 @@ namespace HardwareStore.Data
                 new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
 
 
-            if (context == null || context.Title == null || context.Roles == null)
+            if (context == null || context.Entity == null || context.Roles == null)
             {
                 throw new ArgumentNullException("Null context");
             }
@@ -26,24 +26,20 @@ namespace HardwareStore.Data
             }
 
 
-            if (context.Title.Any())
+            if (!context.Entity.Any())
             {
-                return;
-            }
-            else
-            {
-                context.Title.AddRange(
-                    new Title { Name = "Кухонные вытяжки" },
-                    new Title { Name = "Духовые шкафы" },
-                    new Title { Name = "Варочные поверхности" },
-                    new Title { Name = "Микроволновые печи" },
-                    new Title { Name = "Водонагреватели" },
-                    new Title { Name = "Вентиляторы" },
-                    new Title { Name = "Посудомоечные машины" },
-                    new Title { Name = "Стиральные машины" },
-                    new Title { Name = "Посуда" },
-                    new Title { Name = "Холодильники" },
-                    new Title { Name = "Очистители воздуха" }
+                context.Entity.AddRange(
+                    new Entity { Name = "Кухонные вытяжки" },
+                    new Entity { Name = "Духовые шкафы" },
+                    new Entity { Name = "Варочные поверхности" },
+                    new Entity { Name = "Микроволновые печи" },
+                    new Entity { Name = "Водонагреватели" },
+                    new Entity { Name = "Вентиляторы" },
+                    new Entity { Name = "Посудомоечные машины" },
+                    new Entity { Name = "Стиральные машины" },
+                    new Entity { Name = "Посуда" },
+                    new Entity { Name = "Холодильники" },
+                    new Entity { Name = "Очистители воздуха" }
                     );
             }
 

@@ -22,6 +22,30 @@ namespace HardwareStore.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("HardwareStore.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("EntityID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TitleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityID");
+
+                    b.ToTable("Category");
+                });
+
             modelBuilder.Entity("HardwareStore.Models.Characteristic", b =>
                 {
                     b.Property<int>("Id")
@@ -48,21 +72,16 @@ namespace HardwareStore.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Models.Entity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TitleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TitleId");
+                    b.HasKey("ID");
 
                     b.ToTable("Entity");
                 });
@@ -96,6 +115,9 @@ namespace HardwareStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("EntityId")
                         .HasColumnType("int");
 
@@ -105,25 +127,9 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntityId");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Thing");
-                });
-
-            modelBuilder.Entity("HardwareStore.Models.Title", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Title");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -328,6 +334,15 @@ namespace HardwareStore.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HardwareStore.Models.Category", b =>
+                {
+                    b.HasOne("HardwareStore.Models.Entity", "Entity")
+                        .WithMany("Categories")
+                        .HasForeignKey("EntityID");
+
+                    b.Navigation("Entity");
+                });
+
             modelBuilder.Entity("HardwareStore.Models.Characteristic", b =>
                 {
                     b.HasOne("HardwareStore.Models.Thing", "Thing")
@@ -337,17 +352,6 @@ namespace HardwareStore.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Thing");
-                });
-
-            modelBuilder.Entity("HardwareStore.Models.Entity", b =>
-                {
-                    b.HasOne("HardwareStore.Models.Title", "Title")
-                        .WithMany("Entities")
-                        .HasForeignKey("TitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Title");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Image", b =>
@@ -363,13 +367,11 @@ namespace HardwareStore.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
                 {
-                    b.HasOne("HardwareStore.Models.Entity", "Entity")
+                    b.HasOne("HardwareStore.Models.Category", "Category")
                         .WithMany("Things")
-                        .HasForeignKey("EntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
-                    b.Navigation("Entity");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,9 +425,14 @@ namespace HardwareStore.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HardwareStore.Models.Entity", b =>
+            modelBuilder.Entity("HardwareStore.Models.Category", b =>
                 {
                     b.Navigation("Things");
+                });
+
+            modelBuilder.Entity("HardwareStore.Models.Entity", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
@@ -433,11 +440,6 @@ namespace HardwareStore.Data.Migrations
                     b.Navigation("Characteristics");
 
                     b.Navigation("Images");
-                });
-
-            modelBuilder.Entity("HardwareStore.Models.Title", b =>
-                {
-                    b.Navigation("Entities");
                 });
 #pragma warning restore 612, 618
         }

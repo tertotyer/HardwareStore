@@ -22,8 +22,7 @@ namespace HardwareStore.Controllers
         // GET: Entities
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Entity.Include(e => e.Title);
-            return View(await applicationDbContext.ToListAsync());
+              return View(await _context.Entity.ToListAsync());
         }
 
         // GET: Entities/Details/5
@@ -35,8 +34,7 @@ namespace HardwareStore.Controllers
             }
 
             var entity = await _context.Entity
-                .Include(e => e.Title)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (entity == null)
             {
                 return NotFound();
@@ -48,7 +46,6 @@ namespace HardwareStore.Controllers
         // GET: Entities/Create
         public IActionResult Create()
         {
-            ViewData["TitleId"] = new SelectList(_context.Title, "ID", "ID");
             return View();
         }
 
@@ -57,7 +54,7 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,TitleId")] Entity entity)
+        public async Task<IActionResult> Create([Bind("ID,Name")] Entity entity)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +62,6 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TitleId"] = new SelectList(_context.Title, "ID", "ID", entity.TitleId);
             return View(entity);
         }
 
@@ -82,7 +78,6 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["TitleId"] = new SelectList(_context.Title, "ID", "ID", entity.TitleId);
             return View(entity);
         }
 
@@ -91,9 +86,9 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TitleId")] Entity entity)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Entity entity)
         {
-            if (id != entity.Id)
+            if (id != entity.ID)
             {
                 return NotFound();
             }
@@ -107,7 +102,7 @@ namespace HardwareStore.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntityExists(entity.Id))
+                    if (!EntityExists(entity.ID))
                     {
                         return NotFound();
                     }
@@ -118,7 +113,6 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TitleId"] = new SelectList(_context.Title, "ID", "ID", entity.TitleId);
             return View(entity);
         }
 
@@ -131,8 +125,7 @@ namespace HardwareStore.Controllers
             }
 
             var entity = await _context.Entity
-                .Include(e => e.Title)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (entity == null)
             {
                 return NotFound();
@@ -162,7 +155,7 @@ namespace HardwareStore.Controllers
 
         private bool EntityExists(int id)
         {
-          return _context.Entity.Any(e => e.Id == id);
+          return _context.Entity.Any(e => e.ID == id);
         }
     }
 }

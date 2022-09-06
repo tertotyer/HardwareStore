@@ -9,7 +9,7 @@ namespace HardwareStore.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Title",
+                name: "Entity",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -18,27 +18,27 @@ namespace HardwareStore.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Title", x => x.ID);
+                    table.PrimaryKey("PK_Entity", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Entity",
+                name: "Category",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TitleId = table.Column<int>(type: "int", nullable: false)
+                    TitleId = table.Column<int>(type: "int", nullable: false),
+                    EntityID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Entity", x => x.Id);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entity_Title_TitleId",
-                        column: x => x.TitleId,
-                        principalTable: "Title",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Category_Entity_EntityID",
+                        column: x => x.EntityID,
+                        principalTable: "Entity",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -48,17 +48,17 @@ namespace HardwareStore.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ModelName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EntityId = table.Column<int>(type: "int", nullable: false)
+                    EntityId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Thing", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Thing_Entity_EntityId",
-                        column: x => x.EntityId,
-                        principalTable: "Entity",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Thing_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -103,14 +103,14 @@ namespace HardwareStore.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Category_EntityID",
+                table: "Category",
+                column: "EntityID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Characteristic_ThingId",
                 table: "Characteristic",
                 column: "ThingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Entity_TitleId",
-                table: "Entity",
-                column: "TitleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Image_ThingId",
@@ -118,9 +118,9 @@ namespace HardwareStore.Data.Migrations
                 column: "ThingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Thing_EntityId",
+                name: "IX_Thing_CategoryId",
                 table: "Thing",
-                column: "EntityId");
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,10 +135,10 @@ namespace HardwareStore.Data.Migrations
                 name: "Thing");
 
             migrationBuilder.DropTable(
-                name: "Entity");
+                name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Title");
+                name: "Entity");
         }
     }
 }

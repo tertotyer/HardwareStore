@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HardwareStore.Models.Title>
+﻿@model IEnumerable<HardwareStore.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TitleId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -25,9 +28,12 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                @Html.DisplayFor(modelItem => item.TitleId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
