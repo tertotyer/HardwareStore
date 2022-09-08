@@ -49,7 +49,7 @@ namespace HardwareStore.Controllers
         public IActionResult Create(int sendEntityId)
         {
             ViewData["SendEntityId"] = sendEntityId;
-            ViewData["EntityId"] = new SelectList(_context.Entity, "ID", "Name");
+            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Name");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "ID", "Name", category.EntityId);
+            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Name", category.EntityId);
             return View(category);
         }
 
@@ -83,7 +83,7 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "ID", "Name", category.EntityId);
+            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Name", category.EntityId);
             return View(category);
         }
 
@@ -119,7 +119,7 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EntityId"] = new SelectList(_context.Entity, "ID", "Name", category.EntityId);
+            ViewData["EntityId"] = new SelectList(_context.Entity, "Id", "Name", category.EntityId);
             return View(category);
         }
 

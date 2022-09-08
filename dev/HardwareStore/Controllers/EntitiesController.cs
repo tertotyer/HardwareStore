@@ -34,7 +34,7 @@ namespace HardwareStore.Controllers
             }
 
             var entity = await _context.Entity
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (entity == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Entity entity)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Entity entity)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Entity entity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Entity entity)
         {
-            if (id != entity.ID)
+            if (id != entity.Id)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace HardwareStore.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntityExists(entity.ID))
+                    if (!EntityExists(entity.Id))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace HardwareStore.Controllers
             }
 
             var entity = await _context.Entity
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (entity == null)
             {
                 return NotFound();
@@ -155,7 +155,7 @@ namespace HardwareStore.Controllers
 
         private bool EntityExists(int id)
         {
-          return _context.Entity.Any(e => e.ID == id);
+          return _context.Entity.Any(e => e.Id == id);
         }
     }
 }
