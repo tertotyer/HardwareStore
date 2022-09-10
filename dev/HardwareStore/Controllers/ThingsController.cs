@@ -35,7 +35,7 @@ namespace HardwareStore.Controllers
             }
 
             var thing = await _context.Thing
-                .Include(t => t.Category)
+                .Include(x => x.Images).Include(x => x.Characteristics)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (thing == null)
             {
@@ -66,7 +66,7 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);
         }
 
@@ -83,7 +83,7 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);
         }
 
@@ -119,7 +119,7 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", thing.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);
         }
 

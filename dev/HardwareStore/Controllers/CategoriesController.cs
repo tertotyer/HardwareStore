@@ -35,7 +35,7 @@ namespace HardwareStore.Controllers
             }
 
             var category = await _context.Category
-                .Include(c => c.Entity)
+                .Include(c => c.Things)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {

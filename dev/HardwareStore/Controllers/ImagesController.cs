@@ -7,16 +7,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HardwareStore.Data;
 using HardwareStore.Models;
+using HardwareStore.ViewModels;
 
 namespace HardwareStore.Controllers
 {
     public class ImagesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public ImagesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public ImagesController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;  
         }
 
         // GET: Images
@@ -58,16 +60,31 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImagePath,ThingId")] Image image)
+        public async Task<IActionResult> Create(ImageCreateViewModel imageCreateModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(image);
+                string uniqueFileName = null;
+                if (imageCreateModel.Image != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + imageCreateModel.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    imageCreateModel.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                Image newImage = new Image {
+                    ImagePath = uniqueFileName ??  "null_image.jpg",
+                    ThingId = imageCreateModel.ThingId
+                };
+
+
+                _context.Add(newImage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", image.ThingId);
-            return View(image);
+            ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", imageCreateModel.ThingId);
+            return View(imageCreateModel);
         }
 
         // GET: Images/Edit/5

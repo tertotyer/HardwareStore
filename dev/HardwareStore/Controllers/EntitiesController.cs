@@ -22,7 +22,7 @@ namespace HardwareStore.Controllers
         // GET: Entities
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Entity.ToListAsync());
+            return View(await _context.Entity.ToListAsync());
         }
 
         // GET: Entities/Details/5
@@ -33,7 +33,7 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var entity = await _context.Entity
+            var entity = await _context.Entity.Include(x => x.Categories)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (entity == null)
             {
@@ -148,14 +148,14 @@ namespace HardwareStore.Controllers
             {
                 _context.Entity.Remove(entity);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EntityExists(int id)
         {
-          return _context.Entity.Any(e => e.Id == id);
+            return _context.Entity.Any(e => e.Id == id);
         }
     }
 }
