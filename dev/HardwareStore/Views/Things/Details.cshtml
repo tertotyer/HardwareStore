@@ -31,7 +31,7 @@
         Characteristics:
         @foreach (var ch in Model.Characteristics.ToList())
         {
-            <a>@ch.Name</a>
+            <div>@ch.Name : @ch.Data</div>
         }
     </div>
 </div>
