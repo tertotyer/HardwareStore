@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HardwareStore.Data;
 using HardwareStore.Models;
+using Microsoft.AspNetCore.Mvc.Routing;
+using HardwareStore.Areas;
 
 namespace HardwareStore.Controllers
 {
@@ -22,9 +24,32 @@ namespace HardwareStore.Controllers
         // GET: Things
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Thing.Include(t => t.Category);
-            return View(await applicationDbContext.ToListAsync());
+            var things = _context.Thing.Include(t => t.Category).Include(t => t.Images);
+            return View(await things.ToListAsync());
         }
+
+
+        //TODO: Fix ERROR_CASH_MISS
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchName, float minPrice, float maxPrice)
+        {
+            var things = from t in _context.Thing select t;
+            if (!String.IsNullOrWhiteSpace(searchName))
+            {
+                things = things.Where(t => t.Name.Contains(searchName));
+            }
+
+            if (float.IsNormal(minPrice) && float.IsNormal(maxPrice))
+            {
+                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice);
+            }
+
+            return View(await things
+                .Include(t => t.Category)
+                .Include(t => t.Images)
+                .ToListAsync());
+        }
+
 
         // GET: Things/Details/5
         public async Task<IActionResult> Details(int? id)

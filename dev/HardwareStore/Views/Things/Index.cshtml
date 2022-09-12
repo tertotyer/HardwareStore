@@ -9,6 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@using (Html.BeginForm())
+{
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <p>
+        Name: @Html.TextBox("searchName")
+        MinPrice: @Html.TextBox("minPrice")
+        MaxPrice: @Html.TextBox("maxPrice")
+        <input type="submit" value="Search" />
+    </p>
+
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -27,9 +39,18 @@
     <tbody>
         @foreach (var item in Model)
         {
+            string imagePath;
+            if (item.Images.Count() != 0)
+            {
+                imagePath = $"~/images/{item.Images.First().ImagePath}";
+            }
+            else imagePath = "~/images/null_image.jpg";
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                    <div class="block-image">
+                        <img src="@imagePath" asp-append-version="true" />
+                    </div>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)

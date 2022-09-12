@@ -81,10 +81,10 @@ namespace HardwareStore.Controllers
 
                 _context.Add(newImage);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Things");
             }
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", imageCreateModel.ThingId);
-            return View(imageCreateModel);
+            return View();
         }
 
         // GET: Images/Edit/5
