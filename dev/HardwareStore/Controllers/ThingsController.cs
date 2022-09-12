@@ -9,6 +9,8 @@ using HardwareStore.Data;
 using HardwareStore.Models;
 using Microsoft.AspNetCore.Mvc.Routing;
 using HardwareStore.Areas;
+using HardwareStore.Logic;
+using System.Drawing.Printing;
 
 namespace HardwareStore.Controllers
 {
@@ -21,35 +23,36 @@ namespace HardwareStore.Controllers
             _context = context;
         }
 
-        // GET: Things
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(int? pageNumber)
         {
-            var things = _context.Thing.Include(t => t.Category).Include(t => t.Images);
-            return View(await things.ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Thing>.CreateAsync(_context.Thing.Include(t => t.Category)
+                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-
-        //TODO: Fix ERROR_CASH_MISS
+        //TODO: Fix CASHE ERROR
         [HttpPost]
-        public async Task<IActionResult> Index(string searchName, float minPrice, float maxPrice)
+        public async Task<IActionResult> Index(int? pageNumber, string searchName,
+            int minPrice, int maxPrice = int.MaxValue)
         {
+            ViewData["SearchName"] = searchName;
+            ViewData["MinPrice"] = minPrice;
+            ViewData["MaxPrice"] = maxPrice;
+
             var things = from t in _context.Thing select t;
             if (!String.IsNullOrWhiteSpace(searchName))
             {
+                pageNumber = 1;
                 things = things.Where(t => t.Name.Contains(searchName));
             }
 
-            if (float.IsNormal(minPrice) && float.IsNormal(maxPrice))
-            {
-                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice);
-            }
+            things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice);
 
-            return View(await things
-                .Include(t => t.Category)
-                .Include(t => t.Images)
-                .ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<Thing>.CreateAsync(things.Include(t => t.Category)
+                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
         }
-
 
         // GET: Things/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -181,14 +184,14 @@ namespace HardwareStore.Controllers
             {
                 _context.Thing.Remove(thing);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ThingExists(int id)
         {
-          return _context.Thing.Any(e => e.Id == id);
+            return _context.Thing.Any(e => e.Id == id);
         }
     }
 }
