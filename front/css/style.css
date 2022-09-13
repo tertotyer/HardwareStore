@@ -1,0 +1,235 @@
+/* Обнуление */
+*, *::before, ::after {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+ul, ol, li {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+html, body {
+    height: 100%;
+    line-height: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: #fff;
+}
+.wrapper {
+    min-height: 100%;
+    overflow: hidden;
+}
+
+/* ------------------- */
+
+.container {
+    width: 100%;
+    max-width: 1290px;
+    margin: 0px auto;
+    font-size: 0;
+}
+
+.bg-dark {
+    background-color: #1b1b1b;
+}
+
+.bg-light {
+    background-color: #2a2a2a;
+}
+
+/* -----HEADER---------------------------------- */
+
+.header__container {
+    font-size: 16px;
+}
+
+.header__top {
+    display: flex;
+    justify-content: center;
+}
+
+/* .header__top:before {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg,hsla(0,0%,100%,0) 0,hsla(0,0%,100%,.5) 50%,hsla(0,0%,100%,0));
+    content: "";
+} */
+
+.menu__list {
+    display: flex;
+    justify-content: center;
+}
+
+.menu__item:not(:first-child) {
+    margin: 0px 0px 0px 30px;
+}
+
+/* ---СЛАЙДЕР-------------------------------------------------- */
+
+.slider {
+    
+}
+
+.slider__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 720px;
+    font-size: 56px;
+}
+
+/* ----КАТАЛОГ ТОВАРОВ------------------------------------------------------- */
+
+.catalog__list {
+    margin-right: -30px;
+    margin-bottom: -30px;
+    padding: 30px 0px;
+}
+
+.item {
+    display: inline-block;
+    width: 410px;
+    margin: 0 30px 30px 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.item__two-column {
+    width: 630px;
+}
+
+.item__link {
+    position: relative;
+    display: inline-block;
+    background-color: #d9d9d9;
+    color: #1b1b1b;
+    box-shadow: inset 0 0 0 0 #ef6f2e;
+    cursor: pointer;
+    transition: opacity .5s ease,background-position .3s ease,box-shadow .3s;
+    will-change: opacity,box-shadow,background-position;
+
+}
+.item__bg-dark {
+    background-color: #2a2a2a;
+    color:#d9d9d9;
+}
+
+.item__link:hover {
+    box-shadow: inset 0 -70px 0 0 #ef6f2e;
+}
+
+.item__img {
+    width: 370px;
+    display: block;
+    margin: 20px;
+}
+.item__img-two-column {
+    width: 590px;
+}
+
+.item__footer {
+    position: relative;
+    padding: 20px;
+}
+.item__title {
+    display: block;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.2px;
+}
+.item__arrow{
+    display: block;
+    position: absolute;
+    z-index: 10;
+    bottom: 17px;
+    right: 20px;
+    height: 30px;
+    width: 30px;
+}
+
+/* ----Product---------------------------- */
+
+.products__list {
+    margin-right: -30px;
+    margin-bottom: -30px;
+    padding-top: 60px;
+    padding-bottom: 30px;
+}
+
+.product {
+    display: inline-block;
+    width: 300px;
+    margin: 0 30px 30px 0;
+    color: #d9d9d9;
+    overflow: hidden;
+}
+
+.product__link {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.product__header {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d9d9d9;
+    width: 300px;
+    height: 300px;
+    border-radius: 12px;
+    position: relative;
+}
+
+.product__img {
+    max-width: 70%;
+    max-height: 70%;
+    transition: transform .3s ease,opacity .3s,-webkit-transform .3s ease;
+}
+
+.product__title {
+    display: block;
+    font-weight: 500px;
+    max-height: 4.5em;
+    margin-top: 18px;
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.product__price{
+    display: inline-block;
+    padding-top: 1px;
+    color: #9d9390;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: Akzidenz,Helvetica,Arial,sans-serif;
+    line-height: 1.79;
+    text-align: left;
+}
+
+.currency:after {
+    text-transform: none!important;
+    content: "руб"!important;
+    margin-left: 4px!important;
+    color: inherit!important;
+    font-family: Akzidenz,Helvetica,Arial,sans-serif!important;
+}
+
+.product:hover .product__img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
