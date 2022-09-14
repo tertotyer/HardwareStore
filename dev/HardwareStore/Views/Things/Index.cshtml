@@ -67,7 +67,8 @@
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                     <a asp-controller="Images" asp-action="Create" asp-route-sendThingId="@item.Id">Add image</a> |
-                    <a asp-controller="Characteristics" asp-action="Create" asp-route-sendThingId="@item.Id">Add char</a>
+                    <a asp-controller="Characteristics" asp-action="Create" asp-route-sendThingId="@item.Id">Add char</a> |
+                    <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.Id">Add to cart</a>
                 </td>
             </tr>
         }

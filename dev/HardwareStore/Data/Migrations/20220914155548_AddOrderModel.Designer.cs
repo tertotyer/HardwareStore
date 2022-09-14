@@ -4,6 +4,7 @@ using HardwareStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220914155548_AddOrderModel")]
+    partial class AddOrderModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +42,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Characteristic", b =>
@@ -64,7 +66,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasIndex("ThingId");
 
-                    b.ToTable("Characteristic", (string)null);
+                    b.ToTable("Characteristic");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Entity", b =>
@@ -80,7 +82,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entity", (string)null);
+                    b.ToTable("Entity");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Image", b =>
@@ -101,7 +103,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasIndex("ThingId");
 
-                    b.ToTable("Image", (string)null);
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Order", b =>
@@ -135,7 +137,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
@@ -159,7 +161,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Thing", (string)null);
+                    b.ToTable("Thing");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -376,7 +378,7 @@ namespace HardwareStore.Data.Migrations
 
                     b.HasIndex("ThingsId");
 
-                    b.ToTable("OrderThing", (string)null);
+                    b.ToTable("OrderThing");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>

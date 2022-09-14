@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HardwareStore.Data;
 using HardwareStore.Models;
-using Microsoft.AspNetCore.Mvc.Routing;
-using HardwareStore.Areas;
 using HardwareStore.Logic;
-using System.Drawing.Printing;
+using Microsoft.AspNetCore.Http;
 
 namespace HardwareStore.Controllers
 {
@@ -40,10 +34,10 @@ namespace HardwareStore.Controllers
 
             if(minPrice != 0 || maxPrice != 100000)
             {
-                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice).OrderBy(t => t.Price);
+                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice+maxPrice/10).OrderBy(t => t.Price);
             }
 
-            int pageSize = 2;
+            int pageSize = 4;
             return View(await PaginatedList<Thing>.CreateAsync(things.Include(t => t.Category)
                 .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
         }
