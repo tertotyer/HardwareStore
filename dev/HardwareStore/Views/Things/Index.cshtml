@@ -9,14 +9,25 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 @using (Html.BeginForm())
 {
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <p>
         Name:<input type="text" name="searchName" value="@ViewData["SearchName"]" />
-        MinPrice: <input type="number" name="minPrice" value="@ViewData["MinPrice"]" />
-        MaxPrice: <input type="number" name="maxPrice" value="@ViewData["MaxPrice"]" />
-        <input type="submit" value="Search" />
+        Price:
+        @if ((int)ViewData["MinPrice"] != 0 || (int)ViewData["MaxPrice"] != 100000)
+        {
+            <input type="number" min="0" name="minPrice" value="@ViewData["MinPrice"]" />
+            <input type="number" min="0" name="maxPrice"  value="@ViewData["MaxPrice"]" />
+        }
+        else
+        {
+            <input type="number" min="0" name="minPrice" placeholder="Минимальная цена" />
+            <input type="number" min="0" name="maxPrice" placeholder="Максимальная цена" />
+        }
+        
+        <input type="submit" value="Search" asp-route-pageNumber="1" />
     </p>
 }
 
@@ -60,14 +71,13 @@
                 </td>
             </tr>
         }
-    </tbody>
+    </tbody> 
 </table>
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-
 <a asp-action="Index"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-searchName="@ViewData["SearchName"]"

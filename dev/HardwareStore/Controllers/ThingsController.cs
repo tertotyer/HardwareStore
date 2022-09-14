@@ -23,33 +23,27 @@ namespace HardwareStore.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index(int? pageNumber)
-        {
-            int pageSize = 3;
-            return View(await PaginatedList<Thing>.CreateAsync(_context.Thing.Include(t => t.Category)
-                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
-        }
-
         //TODO: Fix CASHE ERROR
-        [HttpPost]
         public async Task<IActionResult> Index(int? pageNumber, string searchName,
-            int minPrice, int maxPrice = int.MaxValue)
+            int minPrice = 0, int maxPrice = 100000)
         {
             ViewData["SearchName"] = searchName;
             ViewData["MinPrice"] = minPrice;
             ViewData["MaxPrice"] = maxPrice;
 
             var things = from t in _context.Thing select t;
+
             if (!String.IsNullOrWhiteSpace(searchName))
             {
-                pageNumber = 1;
                 things = things.Where(t => t.Name.Contains(searchName));
             }
 
-            things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice);
+            if(minPrice != 0 || maxPrice != 100000)
+            {
+                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice).OrderBy(t => t.Price);
+            }
 
-            int pageSize = 3;
+            int pageSize = 2;
             return View(await PaginatedList<Thing>.CreateAsync(things.Include(t => t.Category)
                 .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
         }
