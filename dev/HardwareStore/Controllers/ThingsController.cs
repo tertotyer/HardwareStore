@@ -5,9 +5,12 @@ using HardwareStore.Data;
 using HardwareStore.Models;
 using HardwareStore.Logic;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HardwareStore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ThingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -17,7 +20,7 @@ namespace HardwareStore.Controllers
             _context = context;
         }
 
-        //TODO: Fix CASHE ERROR
+        [AllowAnonymous]
         public async Task<IActionResult> Index(int? pageNumber, string searchName,
             int minPrice = 0, int maxPrice = 100000)
         {
@@ -43,6 +46,7 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Things/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Thing == null)

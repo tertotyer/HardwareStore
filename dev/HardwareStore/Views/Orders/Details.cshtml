@@ -40,6 +40,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DeliveryMethod)
         </dd>
+        <dd>
+            @foreach (var thing in Model.Things)
+            {
+                <a>@thing.Name , </a>
+            }
+        </dd>
     </dl>
 </div>
 <div>

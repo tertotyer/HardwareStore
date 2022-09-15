@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HardwareStore.Data;
 using HardwareStore.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HardwareStore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class EntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,12 +23,14 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Entities
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Entity.ToListAsync());
         }
 
         // GET: Entities/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Entity == null)

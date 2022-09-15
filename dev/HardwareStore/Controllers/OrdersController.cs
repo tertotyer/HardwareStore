@@ -10,9 +10,12 @@ using HardwareStore.Models;
 using System.Net.NetworkInformation;
 using HardwareStore.Logic;
 using NuGet.Packaging;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HardwareStore.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -36,7 +39,7 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order
+            var order = await _context.Order.Include(o => o.Things)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -47,6 +50,7 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Orders/Create
+        [AllowAnonymous]
         public IActionResult Create()
         {
             ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<Thing>>("cart");
@@ -54,9 +58,8 @@ namespace HardwareStore.Controllers
         }
 
         // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DateCreated,NameBuyer,Email,PhoneNumber,DeliveryMethod")] Order order)
         {
@@ -74,7 +77,7 @@ namespace HardwareStore.Controllers
                 HttpContext.Session.Clear();
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Things");
             }
             ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<Thing>>("cart");
             return View(order);
