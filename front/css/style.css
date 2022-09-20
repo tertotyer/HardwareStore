@@ -40,6 +40,10 @@ html, body {
     font-size: 0;
 }
 
+.section__bottom-border {
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
 .bg-dark {
     background-color: #1b1b1b;
 }
@@ -147,9 +151,9 @@ html, body {
 }
 .item__title {
     display: block;
-    font-weight: 700;
+    font-weight: 500;
     font-size: 24px;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.8px;
 }
 .item__arrow{
     display: block;
@@ -233,3 +237,69 @@ html, body {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
+
+/* ----Стили Product----------------------------------------- */
+
+.button {
+    display: inline-block;
+    padding: 18px 29px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: Akzidenz,Helvetica,Arial,sans-serif;
+    line-height: 15px;
+    letter-spacing: 1.4px;
+    white-space: nowrap;
+    text-align: center;
+    text-transform: uppercase;
+    border: 2px solid #ef6f2e;
+    border-radius: 27.5px;
+    cursor: pointer;
+    transition: opacity .3s ease 0s,background-color .3s ease 0s;
+    -webkit-appearance: none;
+}
+
+/* --------------------------------------------------------- */
+
+.product-slider__container{
+    height: 700px;
+}
+.product-slider__content{
+    display: flex;
+    padding: 30px 0px;
+}
+.product-slider__img{
+    flex: 1;
+}
+.product-slider__img img {
+    width: 100%;
+}
+.product-slider-text{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+}
+.product-slider-text__title{
+    margin-bottom: 20px;
+    font-weight: 400;
+    font-size: 28px;
+}
+.product-slider-text__description {
+    margin-bottom: 32px;
+    font-weight: 400;
+    font-size: 16px;
+}
+.product-slider-text__price{
+    display: inline-block;
+    margin: 0 0 0 20px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: Akzidenz,Helvetica,Arial,sans-serif;
+    line-height: 45px;
+}
+
+
+
+
