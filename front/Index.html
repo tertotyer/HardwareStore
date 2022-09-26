@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=devicewifth, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <title>Cata</title>
 </head>
 
@@ -47,15 +48,40 @@
         </header>
         <section class="slider bg-dark section__bottom-border">
             <div class="container slider__container">
-                <div class="slider__content">Здесь должен быть слайдер</div>
+                <div class="main-slider swiper-container">
+                    <div class="main-slider__wrapper swiper-wrapper">
+                        <div class="main-slider__slide swiper-slide">
+                            <div class="main-slider__image">
+                                <img src="/img/catalog/Duhovka.jpg">
+                            </div>
+                        </div>
+                        <div class="main-slider__slide swiper-slide">
+                            <div class="main-slider__image">
+                                <img src="/img/catalog/toster.jpg">
+                            </div>
+                        </div>
+                        <div class="main-slider__slide swiper-slide">
+                            <div class="main-slider__image">
+                                <img src="/img/catalog/holod.jpg">
+                            </div>
+                        </div>
+                        <div class="main-slider__slide swiper-slide">
+                            <div class="main-slider__image">
+                                <img src="/img/catalog/wide.jpg">
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
             </div>
         </section>
         <section class="catalog bg-dark section__bottom-border">
             <div class="container catalog__container">
-                <div class="section__header">
+                <div class="section__header catalog__header">
                     <!-- <div class="section__title">КАТАЛОГ ТОВАРОВ</div> -->
-                    <div class="specification__title">
-                        <span class="specification__title-inner">Каталог товаров</span>
+                    <div class="section__title catalog__title">
+                        <span class="catalog__title-inner">Каталог товаров</span>
                     </div>
                 </div>
                 <div class="catalog__list">
@@ -118,13 +144,28 @@
         </section>
         <footer class="footer">
             <div class="container footer__container">
-                <div class="footer__title">
-                    Здесь должен быть футер
-                </div>
+                <ul class="footer__list">
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                </ul>
             </div>
         </footer>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="scripts/swiper-main.js"></script>
 </body>
 
 </html>
