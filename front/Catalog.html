@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=devicewifth, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/Catalog.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Cata</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <header class="header bg-dark">
+        <header class="header bg-light">
             <div class="header__container container">
                 <div class="header__top">
                     <img class="header__logo" src="/img/icons/logo.png">
@@ -45,76 +46,13 @@
                 </nav>
             </div>
         </header>
-        <section class="slider bg-dark section__bottom-border">
-            <div class="container slider__container">
-                <div class="slider__content">Здесь должен быть слайдер</div>
-            </div>
-        </section>
-        <section class="catalog bg-dark section__bottom-border">
-            <div class="container catalog__container">
-                <div class="section__header">
-                    <div class="section__title">КАТАЛОГ ТОВАРОВ</div>
-                </div>
-                <div class="catalog__list">
-                    <div class="item">
-                        <a class="item__link">
-                            <img class="item__img" src="img/catalog/01-no-bg.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-black.svg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="item__link">
-                            <img class="item__img" src="img/catalog/01-no-bg.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-black.svg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="item__link">
-                            <img class="item__img" src="img/catalog/01.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-black.svg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="item__link item__bg-dark">
-                            <img class="item__img" src="img/catalog/01-no-bg.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-light.svg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="item__link item__bg-dark">
-                            <img class="item__img" src="img/catalog/01-no-bg.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-light.svg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="item">
-                        <a class="item__link item__bg-dark">
-                            <img class="item__img" src="img/catalog/01-no-bg.png">
-                            <div class="item__footer">
-                                <span class="item__title">Вытяжки</span>
-                                <img class="item__arrow" src="img/icons/right-arrow-light.svg">
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="category bg-dark">
+
+        <section class="category bg-dark section__bottom-border">
             <div class="container category__container">
+                <!-- <div class="category__header">
+                    <div class="category__title">Чайники</div> 
+
+                </div> -->
                 <div class="category__menu-column">
                     <ul class="category-menu__category-list">
                         <li class="category-menu__category-title">
@@ -193,15 +131,117 @@
                     </ul>
                 </div>
                 <div class="category__content-column">
+                    <div class="category__header section__bottom-border">
+                        <div class="section__title category__title">
+                            <span class="category__title-inner">Пароварки</span>
+                        </div>
+                        <div class="category__header-options catalog-options">
+                            <div class="catalog-options__price">
+                                <form action="#" method="post">  <!-- Форма указания цены -->
+                                    <div class="cart-delivery-methods__label">
+                                        <input type="text" placeholder="От" class="cart-delivery-methods__input cart-delivery-methods__input__left" maxlength="50" aria-required="true">
+                                        <input type="text" placeholder="До" class="cart-delivery-methods__input cart-delivery-methods__input__right" maxlength="50" aria-required="true">
+                                        <label class="control-label">Цена:</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="catalog-options__search">
+                                <form action="#" method="post"> <!-- Форма поиска -->
+                                    <div class="cart-delivery-methods__label">
+                                        <input type="text" placeholder="Поиск" class="cart-delivery-methods__input catalog-options__search-input" maxlength="50" aria-required="true">
+                                        <button type="submit" class="search-popup__button">Искать</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="content">
-                        <div class="product">
-                            <a class="product__link">
-                                <div class="product__header">
-                                    <img class="product__img" src="img/catalog/01-no-bg.png">
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
                                 </div>
-                                <div class="product__footer">
-                                    <span class="product__title">Пароварка BORK F700</span>
-                                    <span class="product__price currency">2 200</span>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="product-item">
+                            <a class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="img/catalog/01-no-bg.png">
+                                </div>
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">Пароварка BORK F700</span>
+                                    <span class="product-item__price currency">2 200</span>
                                 </div>
                             </a>
                         </div>
@@ -209,6 +249,13 @@
                 </div>
             </div>
         </section>
+        <footer class="footer">
+            <div class="container footer__container">
+                <div class="footer__title">
+                    Здесь должен быть футер
+                </div>
+            </div>
+        </footer>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="scripts/menu-column.js"></script>

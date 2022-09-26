@@ -141,30 +141,16 @@ body {
     border-bottom: 1px solid hsla(0, 0%, 100%, .1);
 }
 
-.section__header{
-    margin: 24px 0px 20px 30px;
+.section__title {
+    font-weight: 400;
+    font-size: 22px;
+    font-family: Akzidenz-Ext,Helvetica,Arial,sans-serif;
+    line-height: 1.14;
+    letter-spacing: .2px;
 }
-.section__title{
-    display: inline-block;
-    position: relative;
-    font-weight: 500;
-    font-size: 20px;
-    font-family: Helvetica,Arial,sans-serif;
-    line-height: 29px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    vertical-align: middle;
-    transition: color .3s ease 0s;
-}
-.section__title:before {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    height: 2px;
-    background-color: #ef6f2e;
-    content: "";
+.section__title-inner {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #ef6f2e;
 }
 
 .bg-dark {
@@ -173,6 +159,14 @@ body {
 
 .bg-light {
     background-color: #2a2a2a;
+}
+
+.currency:after {
+    text-transform: none !important;
+    content: "руб" !important;
+    margin-left: 4px !important;
+    color: inherit !important;
+    font-family: Akzidenz, Helvetica, Arial, sans-serif !important;
 }
 
 /* -----HEADER---------------------------------- */
@@ -209,7 +203,7 @@ body {
     position: relative;
 }
 
-.menu li:after{
+.menu li:after {
     position: relative;
     bottom: -4px;
     display: block;
@@ -251,9 +245,6 @@ body {
     letter-spacing: 1.3px;
     transition: all .5s;
 
-
-
-
     margin-top: 4px;
     color: #fff;
     display: block;
@@ -267,20 +258,13 @@ body {
     display: flex;
 }
 
-/* .menu__item:not(:first-child) {
-    margin: 40px;
-} */
-
-.sub-menu{
-
-}
-
 .sub-menu__list {
     display: none;
     position: absolute;
+    z-index: 10;
     left: 0;
     top: 0px;
-    padding: 50px 0px 0px 0px;
+    padding: 58px 0px 0px 0px;
     /* display: flex; */
     min-width: 240px;
     flex-direction: column;
@@ -291,17 +275,18 @@ body {
 
 .sub-menu__list>li {
     padding: 10px 20px;
-    /* background-color: #2a2a2a; */
-    background-color: #1b1b1b;
-
+    background-color: #2a2a2a;
     font-weight: 400;
     font-size: 16px;
-    font-family: "helvetica",sans-serif;
+    font-family: "helvetica", sans-serif;
     line-height: 22px;
     letter-spacing: 0;
     -webkit-font-smoothing: antialiased;
     color: #fff;
     letter-spacing: .1px
+}
+.sub-menu__list:last-child{
+    padding-bottom: 30px !important;
 }
 
 /* ---СЛАЙДЕР-------------------------------------------------- */
@@ -358,9 +343,10 @@ body {
 }
 
 .item__img {
-    width: 370px;
+    width: 350px;
+    height: 350px;
     display: block;
-    margin: 20px;
+    margin: 30px;
 }
 
 .item__img-two-column {
@@ -369,13 +355,13 @@ body {
 
 .item__footer {
     position: relative;
-    padding: 20px;
+    padding: 20px 20px;
 }
 
 .item__title {
     display: block;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 20px;
     letter-spacing: 0.8px;
 }
 
@@ -383,10 +369,10 @@ body {
     display: block;
     position: absolute;
     z-index: 10;
-    bottom: 17px;
+    bottom: 15px;
     right: 20px;
-    height: 30px;
-    width: 30px;
+    height: 26px;
+    width: 26px;
 }
 
 /* -------КАТЕГОРИЯ--------------------------------- */
@@ -396,170 +382,15 @@ body {
     margin-bottom: -30px;
     padding-top: 60px;
     padding-bottom: 30px;
+    /* min-width: 0; */
     /* Вынести вверх  */
 }
 
-.category__menu-column {
-    display: inline-block;
-    width: 260px;
-    margin-top: 60px;
-    margin-right: 70px;
-    text-align: left;
-    vertical-align: top;
-}
 
-.category__content-column {
-    display: inline-block;
-    width: calc(100% - 330px);
-    margin: 0 auto;
-    text-align: left;
-    vertical-align: top;
-}
-
-.category-menu__category-list {
-    padding: 40px 0 40px 20px;
-    list-style-type: none;
-    border-bottom: 1px solid hsla(0, 0%, 100%, .1);
-}
-
-.category-menu__category-title {
-    position: relative;
-}
-
-.category-menu__item {
-    display: block;
-    padding-right: 45px;
-    color: #b1b1b1;
-    font-size: 19px;
-    line-height: 1.316;
-    text-align: left;
-
-    cursor: pointer;
-}
-
-.category-menu__item:hover {
-    color: #fff;
-}
-
-.category-menu__item:after {
-    position: absolute;
-    top: 12.5px;
-    right: 20px;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid hsla(0, 0%, 100%, .1);
-    border-bottom: 2px solid hsla(0, 0%, 100%, .1);
-    -webkit-transform: translateY(-50%) rotate(45deg);
-    transform: translateY(-50%) rotate(45deg);
-    transition: border-color .2s ease-out 0s;
-    will-change: border-color;
-    content: "";
-}
-
-.category-menu__item--opened:after {
-    border-color: currentColor;
-    -webkit-transform: rotate(-135deg);
-    transform: rotate(-135deg);
-}
-
-.category-menu__subcategory-list--hide {
-    display: none;
-}
-
-.category-menu__subcategory-list {
-    padding: 22px 0 2px;
-    list-style-type: none;
-}
-
-.category-menu__sub-item {
-    display: inline-block;
-    padding: 6px 0;
-    color: #b1b1b1;
-    font-size: 16px;
-    line-height: 1.4;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.category-menu__sub-item:hover {
-    color: #fff;
-}
-
-.category-menu__sub-item--active {
-    color: #ef6f2e;
-}
-
-/* ----Product---------------------------- */
-
-.product {
-    display: inline-block;
-    width: 300px;
-    margin: 0 30px 30px 0;
-    color: #d9d9d9;
-    overflow: hidden;
-}
-
-.product__link {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.product__header {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d9d9d9;
-    width: 300px;
-    height: 300px;
-    border-radius: 12px;
-    position: relative;
-}
-
-.product__img {
-    max-width: 70%;
-    max-height: 70%;
-    transition: transform .3s ease, opacity .3s, -webkit-transform .3s ease;
-}
-
-.product__title {
-    display: block;
-    font-weight: 500px;
-    max-height: 4.5em;
-    margin-top: 18px;
-    overflow: hidden;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-.product__price {
-    display: inline-block;
-    padding-top: 1px;
-    color: #9d9390;
-    font-weight: 500;
-    font-size: 14px;
-    font-family: Akzidenz, Helvetica, Arial, sans-serif;
-    line-height: 1.79;
-    text-align: left;
-}
-
-.currency:after {
-    text-transform: none !important;
-    content: "руб" !important;
-    margin-left: 4px !important;
-    color: inherit !important;
-    font-family: Akzidenz, Helvetica, Arial, sans-serif !important;
-}
-
-.product:hover .product__img {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-}
 
 /* ----Стили Product----------------------------------------- */
 
-.button {
+/* .button {
     display: inline-block;
     padding: 18px 29px;
     color: #fff;
@@ -576,11 +407,11 @@ body {
     cursor: pointer;
     transition: opacity .3s ease 0s, background-color .3s ease 0s;
     -webkit-appearance: none;
-}
+} */
 
 /* --------------------------------------------------------- */
 
-.product-slider__container {
+/* .product-slider__container {
     height: 700px;
 }
 
@@ -624,4 +455,59 @@ body {
     font-size: 14px;
     font-family: Akzidenz, Helvetica, Arial, sans-serif;
     line-height: 45px;
+} */
+
+/* PRODUCT__NEW */
+
+
+
+.button {
+    display: inline-block;
+    padding: 18px 29px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: Akzidenz,Helvetica,Arial,sans-serif;
+    line-height: 15px;
+    letter-spacing: 1.4px;
+    white-space: nowrap;
+    text-align: center;
+    text-transform: uppercase;
+    border: 2px solid #ef6f2e;
+    border-radius: 27.5px;
+    cursor: pointer;
+    transition: opacity .3s ease 0s,background-color .3s ease 0s;
+    -webkit-appearance: none;
+}
+.button:hover {
+    background-color: #ef6f2e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----FOOTER----------- */
+
+.footer__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.footer__title {
+    font-size: 24px;
 }

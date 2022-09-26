@@ -1,57 +1,245 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=devicewifth, initial-scale=1.0">
-        <link rel="stylesheet" href="css/style.css">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <title>Cata</title>
-    </head>
-    <body>
-        <div class="wrapper">
-            <header class="header bg-dark">
-                <div class="header__container container">
-                    <div class="header__top">
-                        LOGO
-                    </div>
-                    <nav class="header__menu menu">
-                        <ul class="menu__list">
-                            <li class="menu__item">
-                                <a href="" class="menu__link">First</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Second</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Prima</a>
-                            </li>
-                            <li class="menu__item">
-                                <a href="" class="menu__link">Secunda</a>
-                            </li>
-                        </ul>
-                    </nav>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devicewifth, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/Product.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <title>Cata</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header bg-light">
+            <div class="header__container container">
+                <div class="header__top">
+                    <img class="header__logo" src="/img/icons/logo.png">
                 </div>
-            </header>
-            <section class="product-slider bg-dark section__bottom-border">
-                <div class="container product-slider__container">
-                    <div class="product-slider__content">
-                        <div class="product-slider__img">
-                            <img  src="/img/catalog/01-no-bg.png">
-                        </div>
-                        <div class="product-slider-text">
-                            <div class="product-slider-text__title">Мультишеф U804</div>
-                            <div class="product-slider-text__description">Инновационное решение для приготовления блюд ресторанного уровня в один клик на смартфоне</div>
-                            <div class="product-slider-text__buy-container">
-                                <div class="button product-slider-text__button">
-                                    Купить
+                <nav class="header__menu menu">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Каталог</a>
+                            <ul class="sub-menu__list">
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Контакты</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Информация</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="product bg-dark section__bottom-border">
+            <div class="container product__container">
+                <div class="product__header category__header section__bottom-border">
+                    <div class="section__title product__title">
+                        <span class="product__title-inner">Cata LCI 6031 WH</span>
+                    </div>
+                </div>
+                <div class="product__content">
+                    <div class="product__slider-column">
+                        <div class="image-slider swiper-container">
+                            <div class="image-slider__wrapper swiper-wrapper">
+                                <div class="image-slider__slide swiper-slide">
+                                    <div class="image-slider__image">
+                                        <img src="/img/catalog/Duhovka.jpg">
+                                    </div>
                                 </div>
-                                <div class="product-slider-text__price currency">2300</div>
+                                <div class="image-slider__slide swiper-slide">
+                                    <div class="image-slider__image">
+                                        <img src="/img/catalog/toster.jpg">
+                                    </div>
+                                </div>
+                                <div class="image-slider__slide swiper-slide">
+                                    <div class="image-slider__image">
+                                        <img src="/img/catalog/holod.jpg">
+                                    </div>
+                                </div>
+                                <div class="image-slider__slide swiper-slide">
+                                    <div class="image-slider__image">
+                                        <img src="/img/catalog/wide.jpg">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+
+
+                        </div>
+                        <div class="image-mini-slider swiper-container">
+                            <div class="image-mini-slider__wrapper swiper-wrapper">
+                                <div class="image-mini-slider__slide swiper-slide">
+                                    <div class="image-mini-slider__image">
+                                        <img src="/img/catalog/Duhovka.jpg">
+                                    </div>
+                                </div>
+                                <div class="image-mini-slider__slide swiper-slide">
+                                    <div class="image-mini-slider__image">
+                                        <img src="/img/catalog/toster.jpg">
+                                    </div>
+                                </div>
+                                <div class="image-mini-slider__slide swiper-slide">
+                                    <div class="image-mini-slider__image">
+                                        <img src="/img/catalog/holod.jpg">
+                                    </div>
+                                </div>
+                                <div class="image-mini-slider__slide swiper-slide">
+                                    <div class="image-mini-slider__image">
+                                        <img src="/img/catalog/wide.jpg">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="specification__specification">
+                        <div class="specification__title">
+                            <span class="specification__title-inner">Характеристики</span>
+                        </div>
+                        <table class="specification__specification-items-wrapper specification-items-wrapper">     <!-- Таблица, хранящая характеристики -->
+                            <tbody class="specification__specification_items specification-items">
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Мощность</td>    <!-- Название поля -->
+                                    <td class="specification-item__value">1680-2000 Вт</td>       <!-- Значение -->
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Объём колбы</td>
+                                    <td class="specification-item__value">1,5 л</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Температурные режимы</td>
+                                    <td class="specification-item__value">80˚/85˚/90˚/95˚/100˚C</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Поддержание 
+                                    </td>
+                                    <td class="specification-item__value">До 1 ч</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Установка температуры</td>
+                                    <td class="specification-item__value">50-100˚C</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Число степеней крепости</td>
+                                    <td class="specification-item__value">3</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Отсрочка старта</td>
+                                    <td class="specification-item__value">До 24 ч</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Материал корпуса</td>
+                                    <td class="specification-item__value">Сталь, стекло</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Вес</td>
+                                    <td class="specification-item__value">2,4 кг</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Срок гарантии</td>
+                                    <td class="specification-item__value">1 год</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Фильтр от накипи</td>
+                                    <td class="specification-item__value">Металлический</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Тип дисплея</td>
+                                    <td class="specification-item__value">Цифровой</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Тип управления</td>
+                                    <td class="specification-item__value">Электронное</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Автозаваривание</td>
+                                    <td class="specification-item__value">Есть</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Автоотключение</td>
+                                    <td class="specification-item__value">Есть</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Звуковой сигнал</td>
+                                    <td class="specification-item__value">Есть</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Отключение без воды</td>
+                                    <td class="specification-item__value">Есть</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Плавное открывание крышки</td>
+                                    <td class="specification-item__value">Нет</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Нагревательный элемент</td>
+                                    <td class="specification-item__value">Скрытый</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Контакт с базой</td>
+                                    <td class="specification-item__value">360˚</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Длина кабеля</td>
+                                    <td class="specification-item__value">1,05 м</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Награды</td>
+                                    <td class="specification-item__value">Good Design Selection</td>
+                                </tr>
+                                <tr class="specification-item">
+                                    <td class="specification-item__desc">Страна производства</td>
+                                    <td class="specification-item__value">Китай</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="specification__buttons-wrapper">
+                            <a href="/eShop/Kettles/k810/instruction/" class="button button--mobile-wide specification__button">Купить</a>   <!-- Кнопка купить -->
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
+        <section class="specification section__bottom-border">
+            <div class="container specification__container">
+                <div class="specification__left-column">
 
-        </div>
-    </body>
+                </div>
+
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container footer__container">
+                <div class="footer__title">
+                    Здесь должен быть футер
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="scripts/menu-column.js"></script>
+    <script src="scripts/swiper-product.js"></script>
+
+</body>
+
 </html>
