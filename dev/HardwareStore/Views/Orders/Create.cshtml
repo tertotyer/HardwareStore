@@ -8,13 +8,13 @@
 <h1>Create</h1>
 
 <h4>Order</h4>
-@if (ViewBag.ThingsCart != null)
+@if (ViewBag.CartItems != null)
 {
     int totalCost = 0;
-    @foreach (var thing in ViewBag.ThingsCart)
+    @foreach (var cartItem in ViewBag.CartItems)
     {
-        <p>@thing.Name @thing.Price</p>
-        totalCost += thing.Price;
+        <p>@cartItem.Thing.Name @cartItem.Thing.Price</p>
+        totalCost += cartItem.Thing.Price;
     }
     <h4>TotalCost: @totalCost</h4>
 }

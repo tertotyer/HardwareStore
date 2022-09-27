@@ -26,7 +26,8 @@ namespace HardwareStore.Models
         [Required]
         [Display(Name = "Способ доставки")]
         public string DeliveryMethod { get; set; }
-        public ICollection<Thing> Things { get; set; } = new List<Thing>();
+
+        public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
     }
 }

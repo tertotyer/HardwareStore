@@ -12,6 +12,6 @@ namespace HardwareStore.Models
 
         public ICollection<Image> Images { get; set; }
         public ICollection<Characteristic> Characteristics { get; set; }
-        public List<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<CartItem> CartItems { get; set; }
     }
 }

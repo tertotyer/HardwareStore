@@ -16,5 +16,6 @@ namespace HardwareStore.Data
         public DbSet<HardwareStore.Models.Image> Image { get; set; }
         public DbSet<HardwareStore.Models.Characteristic> Characteristic { get; set; }
         public DbSet<HardwareStore.Models.Order> Order { get; set; }
+        public DbSet<HardwareStore.Models.CartItem> OrderItem { get; set; }
     }
 }

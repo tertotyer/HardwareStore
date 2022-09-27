@@ -39,7 +39,7 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Order.Include(o => o.Things)
+            var order = await _context.Order.Include(o => o.CartItems).ThenInclude(x => x.Thing)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -53,7 +53,7 @@ namespace HardwareStore.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
-            ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<Thing>>("cart");
+            ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItem>>("cart");
             return View();
         }
 
@@ -68,18 +68,18 @@ namespace HardwareStore.Controllers
                 _context.Add(order);
                 await _context.SaveChangesAsync();
 
-                var things = HttpContext.Session.GetObject<List<Thing>>("cart");
-                if (things == null)
+                var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart");
+                if (cartItems == null)
                 {
                     return NotFound();
                 }
-                order.Things.AddRange(things);
+                order.CartItems.AddRange(cartItems);
                 HttpContext.Session.Clear();
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index", "Things");
             }
-            ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<Thing>>("cart");
+            ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<CartItem>>("cart");
             return View(order);
         }
 

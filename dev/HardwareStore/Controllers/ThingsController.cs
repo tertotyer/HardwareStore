@@ -142,7 +142,7 @@ namespace HardwareStore.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);
         }
-
+        
         // GET: Things/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

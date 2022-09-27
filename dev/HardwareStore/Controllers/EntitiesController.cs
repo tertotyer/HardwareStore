@@ -9,6 +9,7 @@ using HardwareStore.Data;
 using HardwareStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using HardwareStore.ViewModels;
 
 namespace HardwareStore.Controllers
 {
@@ -16,10 +17,11 @@ namespace HardwareStore.Controllers
     public class EntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public EntitiesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public EntitiesController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Entities
@@ -59,15 +61,29 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Entity entity)
+        public async Task<IActionResult> Create(EntityCreateViewModel entityCreateModel)
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                if (entityCreateModel.Image != null)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/entities");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + entityCreateModel.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    entityCreateModel.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                }
+
+                Entity entity = new Entity { 
+                    Name = entityCreateModel.Name,
+                    ImagePath = uniqueFileName ?? "null_image.jpg"
+                };
+
                 _context.Add(entity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(entity);
+            return View(entityCreateModel);
         }
 
         // GET: Entities/Edit/5
@@ -155,6 +171,13 @@ namespace HardwareStore.Controllers
             }
 
             await _context.SaveChangesAsync();
+
+            var imagePath = entity.ImagePath;
+            if (System.IO.File.Exists("wwwroot/images/entities/" + imagePath))
+            {
+                System.IO.File.Delete("wwwroot/images/entities/" + imagePath);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -16,22 +16,51 @@ namespace HardwareStore.Controllers
 
         public IActionResult Index()
         {
-            var things = HttpContext.Session.GetObject<List<Thing>>("cart") ?? new List<Thing>();
-            return View(things);
+            var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart") ?? new List<CartItem>();
+            return View(cartItems);
         }
 
-        public async Task<IActionResult> AddToCart(int? id)
+        public IActionResult AddToCart(int? id)
         {
-            if (id == null || _context.Thing == null)
+            if (id == null || _context.OrderItem == null)
             {
                 return NotFound();
             }
-            var thing = await _context.Thing.FindAsync(id);
-            if (thing == null)
+
+            var cartItem = new CartItem {
+                ThingId = (int)id,
+                Thing = _context.Thing.Find(id)
+            };
+            HttpContext.Session.AddObject("cart", cartItem);
+
+            return RedirectToAction("Index");
+        } 
+
+        public IActionResult RemoveFromCart(int? id)
+        {
+            if (id == null || _context.OrderItem == null)
             {
                 return NotFound();
             }
-            HttpContext.Session.AddObject("cart", thing);
+
+            var cartItem = HttpContext.Session.GetObject<List<CartItem>>("cart").Where(x=> x.ThingId == id).First();
+            HttpContext.Session.RemoveObject("cart", ref cartItem);
+            
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ChangeItemQuantity(int? id, int quantity)
+        {
+            if (id == null || _context.OrderItem == null)
+            {
+                return NotFound();
+            }
+
+            var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart");
+            cartItems.Where(x => x.ThingId == id).First().Quantity = quantity;
+
+            HttpContext.Session.SetObject("cart", cartItems);
+
             return RedirectToAction("Index");
         }
     }

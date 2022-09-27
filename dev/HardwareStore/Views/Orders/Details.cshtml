@@ -41,9 +41,9 @@
             @Html.DisplayFor(model => model.DeliveryMethod)
         </dd>
         <dd>
-            @foreach (var thing in Model.Things)
+            @foreach (var cartItem in Model.CartItems)
             {
-                <a>@thing.Name , </a>
+                <a>@cartItem.Thing.Name - @cartItem.Quantity </a>
             }
         </dd>
     </dl>

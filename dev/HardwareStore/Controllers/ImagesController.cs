@@ -178,6 +178,13 @@ namespace HardwareStore.Controllers
             }
             
             await _context.SaveChangesAsync();
+
+            var imagePath = image.ImagePath;
+            if (System.IO.File.Exists("wwwroot/images/" + imagePath))
+            {
+                System.IO.File.Delete("wwwroot/images/" + imagePath);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

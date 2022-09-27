@@ -1,4 +1,5 @@
 ﻿using HardwareStore.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace HardwareStore.Logic
@@ -18,9 +19,19 @@ namespace HardwareStore.Logic
 
         public static void AddObject<T>(this ISession session, string key, T value)
         {
-            var cartThings = session.GetObject<List<T>>(key) ?? new List<T>();
-            cartThings.Add(value);
-            session.SetObject(key, cartThings);
+            var arr = session.GetObject<List<T>>(key) ?? new List<T>();
+            arr.Add(value);
+            session.SetObject(key, arr);
+        }
+
+        public static void RemoveObject<T>(this ISession session, string key, ref T value)
+        {
+            var arr = session.GetObject<List<T>>(key);
+            if(arr != null)
+            {
+                arr.Remove(value);
+                session.SetObject(key, arr);
+            }
         }
     }
 }

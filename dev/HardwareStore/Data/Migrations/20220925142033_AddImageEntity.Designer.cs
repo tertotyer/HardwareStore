@@ -4,6 +4,7 @@ using HardwareStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220925142033_AddImageEntity")]
+    partial class AddImageEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,32 +23,6 @@ namespace HardwareStore.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("HardwareStore.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ThingId");
-
-                    b.ToTable("OrderItem");
-                });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
                 {
@@ -393,23 +369,19 @@ namespace HardwareStore.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HardwareStore.Models.CartItem", b =>
+            modelBuilder.Entity("OrderThing", b =>
                 {
-                    b.HasOne("HardwareStore.Models.Order", "Order")
-                        .WithMany("CartItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
 
-                    b.HasOne("HardwareStore.Models.Thing", "Thing")
-                        .WithMany("CartItems")
-                        .HasForeignKey("ThingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("ThingsId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Order");
+                    b.HasKey("OrdersId", "ThingsId");
 
-                    b.Navigation("Thing");
+                    b.HasIndex("ThingsId");
+
+                    b.ToTable("OrderThing");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
@@ -507,6 +479,21 @@ namespace HardwareStore.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderThing", b =>
+                {
+                    b.HasOne("HardwareStore.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HardwareStore.Models.Thing", null)
+                        .WithMany()
+                        .HasForeignKey("ThingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
                 {
                     b.Navigation("Things");
@@ -517,15 +504,8 @@ namespace HardwareStore.Data.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("HardwareStore.Models.Order", b =>
-                {
-                    b.Navigation("CartItems");
-                });
-
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
                 {
-                    b.Navigation("CartItems");
-
                     b.Navigation("Characteristics");
 
                     b.Navigation("Images");
