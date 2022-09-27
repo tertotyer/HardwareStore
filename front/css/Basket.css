@@ -41,9 +41,9 @@
     width: 50%;
     padding: 0px 0px;
 }
-.basket__item-column-left{
+/* .basket__item-column-left{
     border-right: 1px solid hsla(0,0%,100%,.1);
-}
+} */
 
 .basket__item-img {
     display: inline-block;
@@ -60,7 +60,7 @@
 }
 
 .basket__item-title {
-    width: 300px;
+    width: 200px;
     display: inline-block;
     color: #fff;
     font-weight: 400;
