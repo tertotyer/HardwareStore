@@ -54,21 +54,16 @@
         <section class="cart section__bottom-border">
             <div class="container cart__container">
                 <form class="basket__list">
-
                     <div class="basket__item section__bottom-border">
-                        <div class="basket__item-column basket__item-column-left">
-                            <div class="basket__item-img">
-                                <img src="/img/catalog/01-no-bg.png"> <!-- Превью товара-->
-                            </div>
-                            <div class="basket__item-title">
-                                <!-- Название товара -->
-                                Плита Cata M-228
-                            </div>
+                        <div class="basket__item-img">
+                            <img src="/img/catalog/plitajpg.jpg"> <!-- Превью товара-->
                         </div>
-                        <div class="basket__item-column">
-                            <div class="basket__item-count">
-                                <input type="number" class="basket__item-count-input"> <!-- Инпут поле количества товаров-->
-                            </div>
+                        <div class="basket__item-title">
+                            <!-- Название товара -->
+                            Плита Cata M-228
+                        </div>
+                        <div class="basket__item-count">
+                            <input type="number" class="basket__item-count-input"> <!-- Инпут поле количества товаров-->
                             <div class="basket__item-price currency">
                                 <!-- Цена за один товар-->
                                 1200
@@ -77,52 +72,45 @@
                         <button href="#" class="basket__item-delete"></button> <!-- Кнопка удалить -->
                     </div>
 
-                    <div class="basket__list-footer">
-                        <div class="basket__order">
-                            <section class="cart-section step1">
-                                <header class="cart-section__header">
-                                    <!-- <div class="cart-section__index">1</div> -->
-                                    <h2 class="cart-section__title">Личные данные</h2>
-                                </header>
-                                <div class="cart-section__content" style="height: max-content;">
-                                    <form id="personal" class="cart-delivery-methods__personal-data">
-
-                                        <div class="cart-delivery-methods__label">
-                                            <input type="text" id="name" class="cart-delivery-methods__input">
-                                            <label>Имя</label>
-                                        </div>
-
-                                        <div class="cart-delivery-methods__label">
-                                            <input type="tel" id="phone" class="cart-delivery-methods__input"
-                                                name="Login[phone]" value="" maxlength="25"
-                                                placeholder="+375 (__) ___-__-__" aria-required="true"
-                                                autocomplete="off" field_signature="3746900085"
-                                                form_signature="11328614055501689442" visibility_annotation="true"
-                                                inputmode="text">
-                                                <label>Телефон</label>
-                                        </div>
-                                        
-                                        <div class="cart-delivery-methods__label">
-                                            <input type="email" id="email" class="cart-delivery-methods__input" name="Login[email]" value="" maxlength="50"
-                                                aria-required="false" autocomplete="off" field_signature="3289006418" form_signature="11328614055501689442"
-                                                visibility_annotation="true"><label class="control-label" for="email">Email<span
-                                                    class="cart-delivery-methods__label--grey"> (для
-                                                    контроля за заказом)</span></label>
-                                        </div>
-                                        
-                                        <div class="cart-delivery-methods__label">
-                                            <select class="cart-delivery-methods__input">
-                                                <!--Supplement an id here instead of using 'name'-->
-                                                <option value="value1">Доставка курьером</option>
-                                                <option value="value2">Пункт самовывоза</option>
-                                                <option value="value3">Значение 3</option>
-                                            </select>
-                                            <label>Способ доставки</label>
-                                        </div>
-                                        </form>
+                    <section class="cart-section step1">
+                        <header class="cart-section__header">
+                            <div class="cart-section__index">1</div>
+                            <h2 class="cart-section__title">Личные данные</h2>
+                        </header>
+                        <div id="step1Form" class="cart-section__content" style="height: max-content;">
+                            <form id="personal" class="cart-delivery-methods__personal-data js-valid">
+                                <input type="hidden">
+                                <div class="cart-delivery-methods__column">
+                                    <div class="cart-delivery-methods__label field-name required">
+                                        <input type="text" id="name" class="cart-delivery-methods__input"><label
+                                            class="control-label" for="name">Имя</label>
+                                    </div>
                                 </div>
-                            </section>
+                                <div class="cart-delivery-methods__column">
+                                    <div class="cart-delivery-methods__label field-phone required">
+                                        <input type="tel" id="phone"
+                                            class="cart-delivery-methods__input js-valid__input js-valid__input--required"
+                                            name="Login[phone]" value="" maxlength="25"
+                                            placeholder="+375 (__) ___-__-__" aria-required="true" autocomplete="off"
+                                            field_signature="3746900085" form_signature="11328614055501689442"
+                                            visibility_annotation="true" inputmode="text"><label class="control-label"
+                                            for="phone">Телефон</label>
+                                    </div>
+                                    <div class="cart-delivery-methods__label field-email">
+                                        <input type="email" id="email"
+                                            class="cart-delivery-methods__input js-valid__input" name="Login[email]"
+                                            value="" maxlength="50" aria-required="false" autocomplete="off"
+                                            field_signature="3289006418" form_signature="11328614055501689442"
+                                            visibility_annotation="true"><label class="control-label"
+                                            for="email">Email<span class="cart-delivery-methods__label--grey"> (для
+                                                контроля за заказом)</span></label>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </section>
+
+                    <div class="basket__list-footer">
                         <div class="basket__total">
                             <div class="basket__total-count-wrapper">
                                 <div class="basket__total-count">5</div> <!-- Всего товаров в корзине -->
@@ -132,12 +120,11 @@
                                 <div class="basket__total-price">2600</div> <!-- Полная стоимость корзины -->
                                 <div class="basket__total-price-desc">Рублей</div>
                             </div>
-                            <div class="basket__button-continue button">
-                                <!-- Кнопка оформить заказ -->
-                                Оформить
-                            </div>
                         </div>
-
+                        <div class="basket__button-continue button">
+                            <!-- Кнопка оформить заказ -->
+                            Оформить
+                        </div>
                     </div>
                 </form>
             </div>
