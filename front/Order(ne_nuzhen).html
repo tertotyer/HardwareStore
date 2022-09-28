@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devicewifth, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/Basket.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Cata</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header bg-light">
+            <div class="header__container container">
+                <div class="header__top">
+                    <img class="header__logo" src="/img/icons/logo.png">
+                </div>
+                <nav class="header__menu menu">
+                    <ul class="menu__list">
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Каталог</a>
+                            <ul class="sub-menu__list">
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                                <li>
+                                    <a href="" class="sub-menu__link">Второй уровень</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Контакты</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="" class="menu__link">Информация</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section class="cart-header">
+            <div class="container cart-header__container">
+                <div class="cart-header__title">Ваш заказ</div>
+            </div>
+        </section>
+        <section class="cart section__bottom-border">
+            <div class="container cart__container">
+                <form class="basket__list">
+                    <div class="basket__item section__bottom-border">
+                        <div class="basket__item-img">
+                            <img src="/img/catalog/plitajpg.jpg"> <!-- Превью товара-->
+                        </div>
+                        <div class="basket__item-title">
+                            <!-- Название товара -->
+                            Плита Cata M-228
+                        </div>
+                        <div class="basket__item-count">
+                            <input type="number" class="basket__item-count-input"> <!-- Инпут поле количества товаров-->
+                            <div class="basket__item-price currency">
+                                <!-- Цена за один товар-->
+                                1200
+                            </div>
+                        </div>
+                        <button href="#" class="basket__item-delete"></button> <!-- Кнопка удалить -->
+                    </div>
+
+                    <section class="cart-section step1">
+                        <header class="cart-section__header">
+                            <div class="cart-section__index">1</div>
+                            <h2 class="cart-section__title">Личные данные</h2>
+                        </header>
+                        <div id="step1Form" class="cart-section__content" style="height: max-content;">
+                            <form id="personal" class="cart-delivery-methods__personal-data js-valid">
+                                <input type="hidden">
+                                <div class="cart-delivery-methods__column">
+                                    <div class="cart-delivery-methods__label field-name required">
+                                        <input type="text" id="name" class="cart-delivery-methods__input"><label
+                                            class="control-label" for="name">Имя</label>
+                                    </div>
+                                </div>
+                                <div class="cart-delivery-methods__column">
+                                    <div class="cart-delivery-methods__label field-phone required">
+                                        <input type="tel" id="phone"
+                                            class="cart-delivery-methods__input js-valid__input js-valid__input--required"
+                                            name="Login[phone]" value="" maxlength="25"
+                                            placeholder="+375 (__) ___-__-__" aria-required="true" autocomplete="off"
+                                            field_signature="3746900085" form_signature="11328614055501689442"
+                                            visibility_annotation="true" inputmode="text"><label class="control-label"
+                                            for="phone">Телефон</label>
+                                    </div>
+                                    <div class="cart-delivery-methods__label field-email">
+                                        <input type="email" id="email"
+                                            class="cart-delivery-methods__input js-valid__input" name="Login[email]"
+                                            value="" maxlength="50" aria-required="false" autocomplete="off"
+                                            field_signature="3289006418" form_signature="11328614055501689442"
+                                            visibility_annotation="true"><label class="control-label"
+                                            for="email">Email<span class="cart-delivery-methods__label--grey"> (для
+                                                контроля за заказом)</span></label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                    <div class="basket__list-footer">
+                        <div class="basket__total">
+                            <div class="basket__total-count-wrapper">
+                                <div class="basket__total-count">5</div> <!-- Всего товаров в корзине -->
+                                <div class="basket__total-count-desc">Товаров</div>
+                            </div>
+                            <div class="basket__total-price-wrapper">
+                                <div class="basket__total-price">2600</div> <!-- Полная стоимость корзины -->
+                                <div class="basket__total-price-desc">Рублей</div>
+                            </div>
+                        </div>
+                        <div class="basket__button-continue button">
+                            <!-- Кнопка оформить заказ -->
+                            Оформить
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container footer__container">
+                <ul class="footer__list">
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                    <li class="footer__item">
+                        <a href="#">Информация</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+</body>
+
+</html>
