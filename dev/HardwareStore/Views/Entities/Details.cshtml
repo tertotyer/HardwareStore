@@ -1,29 +1,124 @@
-﻿@model HardwareStore.Models.Entity
+﻿@model ICollection<Thing>
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<section class="category bg-dark section__bottom-border">
+    <div class="container category__container">
+        <div class="category__menu-column">
+            @foreach (var entity in ViewBag.Entities)
+            {
+                <ul class="category-menu__category-list">
+                    <li class="category-menu__category-title">
+                        <a class="category-menu__item">@entity.Name</a>
+                        <ul class="category-menu__subcategory-list category-menu__subcategory-list--hide ">
+                            @foreach (var category in entity.Categories)
+                            {
+                                <li class="category-menu__subcategory-title">
+                                    <div class="category-menu__sub-item">
+                                        <a asp-action="Details" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            }
+        </div>
+        <div class="category__content-column">
+            <div class="category__header section__bottom-border">
+                <div class="section__title category__title">
+                    <span class="category__title-inner">@ViewBag.EntityName</span>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="category__header-options catalog-options">
+                        <div class="catalog-options__price">
+                            <div class="cart-delivery-methods__label">
+                                @if ((int)ViewData["MinPrice"] != 0 || (int)ViewData["MaxPrice"] != 10000)
+                                {
+                                    <input type="number" placeholder="От" min="0" name="minPrice" value="@ViewData["MinPrice"]" class="cart-delivery-methods__input cart-delivery-methods__input__left" />
+                                    <input type="number" placeholder="До" min="0" name="maxPrice" value="@ViewData["MaxPrice"]" class="cart-delivery-methods__input cart-delivery-methods__input__right" />
+                                    <label class="control-label">Цена:</label>
+                                }
+                                else
+                                {
+                                    <input type="number" placeholder="От" min="0" name="minPrice" class="cart-delivery-methods__input cart-delivery-methods__input__left" />
+                                    <input type="number" placeholder="До" min="0" name="maxPrice" class="cart-delivery-methods__input cart-delivery-methods__input__right" />
+                                    <label class="control-label">Цена:</label>
+                                }
 
-<div>
-    <h4>Entity</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
+                            </div>
+                        </div>
+                        <div class="catalog-options__search">
+                            <div class="cart-delivery-methods__label">
+                                <input type="text" name="searchName" value="@ViewData["SearchName"]" placeholder="Поиск" class="cart-delivery-methods__input catalog-options__search-input" />
+                                <button type="submit" class="search-popup__button">Искать</button>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-@foreach (var category in Model.Categories.ToList())
-{
-    <a asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a>
+            </div>
+
+            <div class="content">
+
+                @foreach (var thing in Model)
+                {
+                    string imagePath;
+                    if (thing.Images.Count() != 0)
+                    {
+                        imagePath = $"~/images/{thing.Images.First().ImagePath}";
+                    }
+                    else imagePath = "~/images/null_image.jpg";
+
+                    <div class="product-item">
+                        <a class="product-item__link">
+
+                            <div class="product-item__header">
+                                <img class="product-item__img" src="@imagePath" asp-append-version="true" />
+                            </div>
+
+                            <div class="product-item__footer">
+                                <span class="product-item__title">@thing.Name</span>
+                                <span class="product-item__price">@thing.Price руб</span>
+                            </div>
+                        </a>
+                    </div>
+
+                }
+            </div>
+        </div>
+       
+    </div>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="~/scripts/menu-column.js"></script>
+
+
+@*Paginataion*@
+@*
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-searchName="@ViewData["SearchName"]"
+   asp-route-minPrice="@ViewData["MinPrice"]"
+   asp-route-maxPrice="@ViewData["MaxPrice"]"
+   class="button @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-searchName="@ViewData["SearchName"]"
+   asp-route-minPrice="@ViewData["MinPrice"]"
+   asp-route-maxPrice="@ViewData["MaxPrice"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>*@

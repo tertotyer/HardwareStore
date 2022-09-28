@@ -10,6 +10,7 @@ using HardwareStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using HardwareStore.ViewModels;
+using HardwareStore.Logic;
 
 namespace HardwareStore.Controllers
 {
@@ -33,21 +34,38 @@ namespace HardwareStore.Controllers
 
         // GET: Entities/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, string searchName,
+            int minPrice = 0, int maxPrice = 10000)
         {
             if (id == null || _context.Entity == null)
             {
                 return NotFound();
             }
 
-            var entity = await _context.Entity.Include(x => x.Categories)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (entity == null)
+            ViewData["SearchName"] = searchName;
+            ViewData["MinPrice"] = minPrice;
+            ViewData["MaxPrice"] = maxPrice;
+            var entity = await _context.Entity.FindAsync(id);
+            ViewData["EntityName"] = entity.Name;
+            ViewData["Entities"] = await _context.Entity.Include(x => x.Categories).ToListAsync();
+
+
+            var things = from t in _context.Thing where t.Category.EntityId == id select t;
+            if (!String.IsNullOrWhiteSpace(searchName))
             {
-                return NotFound();
+                things = things.Where(t => t.Name.Contains(searchName));
             }
 
-            return View(entity);
+            if (minPrice != 0 || maxPrice != 100000)
+            {
+                things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice + maxPrice / 10).OrderBy(t => t.Price);
+            }
+
+            // Pagination
+            //int pageSize = 2;
+            //return View(await PaginatedList<Thing>.CreateAsync(things
+            //    .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(things.Include(x => x.Images).ToList());
         }
 
         // GET: Entities/Create

@@ -1,5 +1,6 @@
 using HardwareStore.Areas;
 using HardwareStore.Data;
+using HardwareStore.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddErrorDescriber<AppErrorDescriber>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<GetDataService>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>

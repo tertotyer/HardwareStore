@@ -1,8 +1,76 @@
-﻿@{
+﻿@model IEnumerable<HardwareStore.Models.Entity>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="slider bg-dark section__bottom-border">
+    <div class="container slider__container">
+        <div class="main-slider swiper-container">
+            <div class="main-slider__wrapper swiper-wrapper">
+                <div class="main-slider__slide swiper-slide">
+                    <div class="main-slider__image">
+                        <img src="~/images/entities/79dadc2c-441b-42af-8189-eb9b5844176d_Ливси.jpg">
+
+                    </div>
+                </div>
+                <div class="main-slider__slide swiper-slide">
+                    <div class="main-slider__image">
+                        <img src="~/images/null_image.jpg">
+
+                    </div>
+                </div>
+                <div class="main-slider__slide swiper-slide">
+                    <div class="main-slider__image">
+                        <img src="~/images/null_image.jpg">
+
+                    </div>
+                </div>
+                <div class="main-slider__slide swiper-slide">
+                    <div class="main-slider__image">
+                        <img src="~/images/null_image.jpg">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+        </div>
+    </div>
+</section>
+
+<section class="catalog bg-dark section__bottom-border">
+    <div class="container catalog__container">
+        <div class="section__header catalog__header">
+            <!-- <div class="section__title">КАТАЛОГ ТОВАРОВ</div> -->
+            <div class="section__title catalog__title">
+                <span class="catalog__title-inner">Каталог товаров</span>
+            </div>
+        </div>
+
+        <div class="catalog__list">
+            @foreach (var entity in Model)
+            {
+                string imagePath;
+                if (entity.ImagePath != null)
+                {
+                    imagePath = $"~/images/entities/{entity.ImagePath}";
+                }
+                else imagePath = "~/images/null_image.jpg";
+                <div class="item">
+                    <a asp-action="Details" asp-controller="Entities" asp-route-id="@entity.Id" class="item__link item__bg-dark">
+                        <img class="item__img" src="@imagePath" asp-append-version="true" />
+                        <div class="item__footer">
+                            <span class="item__title">@entity.Name</span>
+                            <img class="item__arrow" src="~/images/icons/right-arrow-light.svg">
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="~/scripts/swiper-main.js"></script>

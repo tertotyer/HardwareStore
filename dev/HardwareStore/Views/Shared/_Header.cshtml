@@ -1,0 +1,41 @@
+﻿@using HardwareStore.Services
+@inject GetDataService DataService
+
+@{
+    var entities = DataService.GetEntities();
+}
+
+<header class="header bg-light">
+    <div class="header__container container">
+        <div class="header__top">
+            <a asp-controller="Home" asp-action="Index">
+                <img class="header__logo" src="~/images/icons/logo.png">
+            </a>
+        </div>
+        <nav class="header__menu menu">
+            <ul class="menu__list">
+                <li class="menu__item">
+                    <a href="" class="menu__link">Каталог</a>
+                    <ul class="sub-menu__list">
+                        @foreach (var entity in entities)
+                        {
+                            <li>
+                                <a asp-action="Details" asp-controller="Entities" asp-route-id="@entity.Id" class="sub-menu__link">
+                                    @entity.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+                <li class="menu__item">
+                    <a href="" class="menu__link">Контакты</a>
+                </li>
+                <li class="menu__item">
+                    <a href="" class="menu__link">Информация</a>
+                </li>
+                <partial name="_LoginPartial" />
+
+            </ul>
+        </nav>
+    </div>
+</header>
