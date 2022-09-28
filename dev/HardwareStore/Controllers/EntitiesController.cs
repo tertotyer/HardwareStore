@@ -65,18 +65,18 @@ namespace HardwareStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-                if (entityCreateModel.Image != null)
-                {
-                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/entities");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + entityCreateModel.Image.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    entityCreateModel.Image.CopyTo(new FileStream(filePath, FileMode.Create));
-                }
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/entities");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + entityCreateModel.Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                Entity entity = new Entity { 
+                using var fstr = new FileStream(filePath, FileMode.Create);
+                entityCreateModel.Image.CopyTo(fstr);
+
+
+                Entity entity = new Entity
+                {
                     Name = entityCreateModel.Name,
-                    ImagePath = uniqueFileName ?? "null_image.jpg"
+                    ImagePath = uniqueFileName
                 };
 
                 _context.Add(entity);

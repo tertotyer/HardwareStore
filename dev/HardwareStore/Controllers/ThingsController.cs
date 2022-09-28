@@ -171,13 +171,25 @@ namespace HardwareStore.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Thing'  is null.");
             }
-            var thing = await _context.Thing.FindAsync(id);
+
+            var thing = await _context.Thing.Include(x=> x.Images).Where(x=> x.Id == id).FirstAsync();
+            var images = thing.Images;
+
             if (thing != null)
             {
                 _context.Thing.Remove(thing);
             }
-
             await _context.SaveChangesAsync();
+
+            foreach (var image in images)
+            {
+                var imagePath = image.ImagePath;
+                if (System.IO.File.Exists("wwwroot/images/" + imagePath))
+                {
+                    System.IO.File.Delete("wwwroot/images/" + imagePath);
+                }
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 

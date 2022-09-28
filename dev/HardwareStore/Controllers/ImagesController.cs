@@ -21,7 +21,7 @@ namespace HardwareStore.Controllers
         public ImagesController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
-            _hostingEnvironment = hostingEnvironment;  
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Images
@@ -67,17 +67,15 @@ namespace HardwareStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-                if (imageCreateModel.Image != null)
-                {
-                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + imageCreateModel.Image.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    imageCreateModel.Image.CopyTo(new FileStream(filePath, FileMode.Create));
-                }
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageCreateModel.Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using var fstr = new FileStream(filePath, FileMode.Create);
+                imageCreateModel.Image.CopyTo(fstr);
 
-                Image newImage = new Image {
-                    ImagePath = uniqueFileName ??  "null_image.jpg",
+                Image newImage = new Image
+                {
+                    ImagePath = uniqueFileName,
                     ThingId = imageCreateModel.ThingId
                 };
 
@@ -86,6 +84,7 @@ namespace HardwareStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Things");
             }
+            ViewData["SendThingId"] = imageCreateModel.ThingId;
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", imageCreateModel.ThingId);
             return View();
         }
@@ -176,7 +175,7 @@ namespace HardwareStore.Controllers
             {
                 _context.Image.Remove(image);
             }
-            
+
             await _context.SaveChangesAsync();
 
             var imagePath = image.ImagePath;
@@ -190,7 +189,7 @@ namespace HardwareStore.Controllers
 
         private bool ImageExists(int id)
         {
-          return _context.Image.Any(e => e.Id == id);
+            return _context.Image.Any(e => e.Id == id);
         }
     }
 }
