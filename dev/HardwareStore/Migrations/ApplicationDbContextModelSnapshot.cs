@@ -4,18 +4,16 @@ using HardwareStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HardwareStore.Data.Migrations
+namespace HardwareStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220925142033_AddImageEntity")]
-    partial class AddImageEntity
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,6 +21,32 @@ namespace HardwareStore.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("HardwareStore.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ThingId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ThingId");
+
+                    b.ToTable("OrderItem");
+                });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
                 {
@@ -59,8 +83,8 @@ namespace HardwareStore.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThingId")
-                        .HasColumnType("int");
+                    b.Property<string>("ThingId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -99,8 +123,8 @@ namespace HardwareStore.Data.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThingId")
-                        .HasColumnType("int");
+                    b.Property<string>("ThingId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -145,14 +169,14 @@ namespace HardwareStore.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Existence")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -369,19 +393,21 @@ namespace HardwareStore.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OrderThing", b =>
+            modelBuilder.Entity("HardwareStore.Models.CartItem", b =>
                 {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
+                    b.HasOne("HardwareStore.Models.Order", "Order")
+                        .WithMany("CartItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("ThingsId")
-                        .HasColumnType("int");
+                    b.HasOne("HardwareStore.Models.Thing", "Thing")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ThingId");
 
-                    b.HasKey("OrdersId", "ThingsId");
+                    b.Navigation("Order");
 
-                    b.HasIndex("ThingsId");
-
-                    b.ToTable("OrderThing");
+                    b.Navigation("Thing");
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
@@ -399,9 +425,7 @@ namespace HardwareStore.Data.Migrations
                 {
                     b.HasOne("HardwareStore.Models.Thing", "Thing")
                         .WithMany("Characteristics")
-                        .HasForeignKey("ThingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ThingId");
 
                     b.Navigation("Thing");
                 });
@@ -410,9 +434,7 @@ namespace HardwareStore.Data.Migrations
                 {
                     b.HasOne("HardwareStore.Models.Thing", "Thing")
                         .WithMany("Images")
-                        .HasForeignKey("ThingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ThingId");
 
                     b.Navigation("Thing");
                 });
@@ -479,21 +501,6 @@ namespace HardwareStore.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderThing", b =>
-                {
-                    b.HasOne("HardwareStore.Models.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HardwareStore.Models.Thing", null)
-                        .WithMany()
-                        .HasForeignKey("ThingsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
                 {
                     b.Navigation("Things");
@@ -504,8 +511,15 @@ namespace HardwareStore.Data.Migrations
                     b.Navigation("Categories");
                 });
 
+            modelBuilder.Entity("HardwareStore.Models.Order", b =>
+                {
+                    b.Navigation("CartItems");
+                });
+
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("Characteristics");
 
                     b.Navigation("Images");

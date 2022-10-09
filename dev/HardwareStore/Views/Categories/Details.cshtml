@@ -15,7 +15,6 @@
                         <ul class="category-menu__subcategory-list category-menu__subcategory-list--hide ">
                             @foreach (var category in entity.Categories)
                             {
-
                                 if (User.IsInRole("admin"))
                                 {
                                     <li class="category-menu__subcategory-title">
@@ -42,7 +41,10 @@
             <div class="category__header section__bottom-border">
                 <div class="section__title category__title">
                     <span class="category__title-inner">@ViewBag.CategoryName</span>
-                    <span class="category__title-inner"><a class="admin-text" asp-action="Create" asp-controller="Things" asp-route-sendCategoryId="@ViewBag.Id">Add thing</a></span>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <span class="category__title-inner"><a class="admin-text" asp-action="Create" asp-controller="Things" asp-route-sendCategoryId="@ViewBag.Id">Add thing</a></span>
+                    }
                 </div>
                 @using (Html.BeginForm())
                 {

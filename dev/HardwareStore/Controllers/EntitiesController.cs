@@ -50,13 +50,14 @@ namespace HardwareStore.Controllers
             ViewData["Id"] = id;
             ViewData["Entities"] = await _context.Entity.Include(x => x.Categories).ToListAsync();
 
-            var things = from t in _context.Thing where t.Category.EntityId == id select t;
+            var things = from t in _context.Thing.Include(x=>x.Category) 
+                         where t.Category.EntityId == id where t.Existence == true select t;
             if (!String.IsNullOrWhiteSpace(searchName))
             {
                 things = things.Where(t => t.Name.Contains(searchName));
             }
 
-            if (minPrice != 0 || maxPrice != 100000)
+            if (minPrice != 0 || maxPrice != 10000)
             {
                 things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice + maxPrice / 10).OrderBy(t => t.Price);
             }

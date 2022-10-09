@@ -29,7 +29,7 @@ namespace HardwareStore.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Order.ToListAsync());
+            return View(await _context.Order.ToListAsync());
         }
 
         // GET: Orders/Details/5
@@ -73,6 +73,10 @@ namespace HardwareStore.Controllers
                 if (cartItems == null)
                 {
                     return NotFound();
+                }
+                foreach (var cartItem in cartItems)
+                {
+                    cartItem.Thing = null;
                 }
                 order.CartItems.AddRange(cartItems);
                 HttpContext.Session.Clear();
@@ -118,14 +122,14 @@ namespace HardwareStore.Controllers
             {
                 _context.Order.Remove(order);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool OrderExists(int id)
         {
-          return _context.Order.Any(e => e.Id == id);
+            return _context.Order.Any(e => e.Id == id);
         }
     }
 }

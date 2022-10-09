@@ -51,7 +51,7 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Images/Create
-        public IActionResult Create(int sendThingId)
+        public IActionResult Create(string sendThingId)
         {
             ViewData["SendThingId"] = sendThingId;
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name");
@@ -82,7 +82,7 @@ namespace HardwareStore.Controllers
 
                 _context.Add(newImage);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Things");
+                return RedirectToAction("Details", "Things", new { id = newImage.ThingId});
             }
             ViewData["SendThingId"] = imageCreateModel.ThingId;
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", imageCreateModel.ThingId);

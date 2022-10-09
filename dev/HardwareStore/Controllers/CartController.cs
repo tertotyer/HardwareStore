@@ -23,7 +23,7 @@ namespace HardwareStore.Controllers
             return View(cartItems);
         }
 
-        public async Task<IActionResult> AddToCart(int? id, string imagePath)
+        public async Task<IActionResult> AddToCart(string id, string imagePath)
         {
             if (id == null || _context.OrderItem == null)
             {
@@ -32,7 +32,7 @@ namespace HardwareStore.Controllers
 
             var cartItem = new CartItemSession
             {
-                ThingId = (int)id,
+                ThingId = id,
                 Thing = await _context.Thing.FindAsync(id),
                 ImagePath = imagePath
             };
@@ -42,7 +42,7 @@ namespace HardwareStore.Controllers
             return RedirectToAction("Create", "Orders");
         }
 
-        public IActionResult RemoveFromCart(int? id)
+        public IActionResult RemoveFromCart(string id)
         {
             if (id == null || _context.OrderItem == null)
             {
@@ -55,7 +55,7 @@ namespace HardwareStore.Controllers
             return RedirectToAction("Create", "Orders");
         }
 
-        public IActionResult ChangeItemQuantity(int? id, int quantity)
+        public IActionResult ChangeItemQuantity(string id, int quantity)
         {
             if (id == null || _context.OrderItem == null)
             {

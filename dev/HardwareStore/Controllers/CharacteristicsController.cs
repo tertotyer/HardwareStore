@@ -51,7 +51,7 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Characteristics/Create
-        public IActionResult Create(int sendThingId)
+        public IActionResult Create(string sendThingId)
         {
             ViewData["SendThingId"] = sendThingId;
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name");
@@ -69,7 +69,7 @@ namespace HardwareStore.Controllers
             {
                 _context.Add(characteristic);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Things", new { id = characteristic.ThingId });
             }
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", characteristic.ThingId);
             return View(characteristic);

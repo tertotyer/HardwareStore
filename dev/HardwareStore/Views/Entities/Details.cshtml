@@ -41,6 +41,11 @@
             <div class="category__header section__bottom-border">
                 <div class="section__title category__title">
                     <span class="category__title-inner">@ViewBag.EntityName</span>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <span class="category__title-inner"><a class="admin-text" asp-action="Create" asp-controller="Categories" asp-route-sendEntityId="@ViewBag.Id">Add category</a></span>
+
+                    }
                 </div>
                 @using (Html.BeginForm())
                 {
@@ -80,25 +85,28 @@
             <div class="content">
                 @foreach (var thing in Model)
                 {
-                    string imagePath;
-                    if (thing.Images.Count() != 0)
+                    if (thing.Category.Name != "Void")
                     {
-                        imagePath = $"~/images/{thing.Images.First().ImagePath}";
+                        string imagePath;
+                        if (thing.Images.Count() != 0)
+                        {
+                            imagePath = $"~/images/{thing.Images.First().ImagePath}";
+                        }
+                        else imagePath = "~/images/null_image.jpg";
+
+                        <div class="product-item">
+                            <a asp-action="Details" asp-controller="Things" asp-route-id="@thing.Id" class="product-item__link">
+                                <div class="product-item__header">
+                                    <img class="product-item__img" src="@imagePath" asp-append-version="true" />
+                                </div>
+
+                                <div class="product-item__footer">
+                                    <span class="product-item__title">@thing.Name</span>
+                                    <span class="product-item__price">@thing.Price руб</span>
+                                </div>
+                            </a>
+                        </div>
                     }
-                    else imagePath = "~/images/null_image.jpg";
-
-                    <div class="product-item">
-                        <a asp-action="Details" asp-controller="Things" asp-route-id="@thing.Id" class="product-item__link">
-                            <div class="product-item__header">
-                                <img class="product-item__img" src="@imagePath" asp-append-version="true" />
-                            </div>
-
-                            <div class="product-item__footer">
-                                <span class="product-item__title">@thing.Name</span>
-                                <span class="product-item__price">@thing.Price руб</span>
-                            </div>
-                        </a>
-                    </div>
                 }
             </div>
         </div>

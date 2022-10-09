@@ -8,16 +8,26 @@
     <div class="container product__container">
         <div class="product__header category__header section__bottom-border">
             <div class="section__title product__title">
-                <span class="product__title-inner">@Model.Name</span> |
-                <span class="product__title-inner">
-                    <a class="admin-text" asp-controller="Images" asp-action="Create"
+                <span class="product__title-inner">@Model.Name</span> 
+                @if (User.IsInRole("admin"))
+                {
+                    <span class="product__title-inner">
+                        <a class="admin-text" asp-controller="Images" asp-action="Create"
                        asp-route-sendThingId="@Model.Id">Add image</a> |
-                </span>
-                <span class="product__title-inner">
-                    <a class="admin-text" asp-controller="Characteristics" asp-action="Create"
-                       asp-route-sendThingId="@Model.Id">Add characteristic</a>
-                </span>
-
+                    </span>
+                    <span class="product__title-inner">
+                        <a class="admin-text" asp-controller="Characteristics" asp-action="Create"
+                       asp-route-sendThingId="@Model.Id">Add characteristic</a> |
+                    </span>
+                    <span class="product__title-inner">
+                        <a class="admin-text" asp-controller="Things" asp-action="Edit"
+                       asp-route-id="@Model.Id">Edit</a> |
+                    </span>
+                    <span class="product__title-inner">
+                        <a class="admin-text" asp-controller="Things" asp-action="Delete"
+                       asp-route-id="@Model.Id">Delete</a>
+                    </span>
+                }
             </div>
         </div>
         <div class="product__content">
@@ -28,7 +38,7 @@
                         {
                             @foreach (var image in Model.Images)
                             {
-                                string imagePath = $"~/images/{image.ImagePath}"; 
+                                string imagePath = $"~/images/{image.ImagePath}";
 
                                 <div class="image-slider__slide swiper-slide">
                                     <div class="image-slider__image">
@@ -99,7 +109,7 @@
                     {
                         string imagePath = Model.Images.First().ImagePath;
                         <a asp-controller="Cart" asp-action="AddtoCart"
-                       asp-route-id="@Model.Id" asp-route-imagePath="@imagePath" 
+                       asp-route-id="@Model.Id" asp-route-imagePath="@imagePath"
                        class="button button--mobile-wide specification__button">Купить</a>
                     }
                     else
@@ -109,7 +119,7 @@
                        asp-route-id="@Model.Id" asp-route-imagePath="@imagePath"
                        class="button button--mobile-wide specification__button">Купить</a>
                     }
-                      <!-- Кнопка купить -->
+                    <!-- Кнопка купить -->
                 </div>
             </div>
         </div>

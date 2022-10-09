@@ -9,7 +9,7 @@ namespace HardwareStore.ViewModels
 
         [Required(ErrorMessage = "Please select a file.")]
         public IFormFile Image { get; set; }
-        public int ThingId { get; set; }
+        public string ThingId { get; set; }
         public Thing Thing { get; set; }
 
     }

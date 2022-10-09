@@ -39,6 +39,12 @@ namespace HardwareStore.Data
                     new Entity { Name = "Холодильники" },
                     new Entity { Name = "Очистители воздуха" }
                     );
+                context.SaveChanges();
+
+                foreach (var entity in context.Entity)
+                {
+                    context.Category.Add(new Category { Name = "Void", EntityId = entity.Id});
+                }
             }
 
             context.SaveChanges();

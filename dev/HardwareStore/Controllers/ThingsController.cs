@@ -47,7 +47,7 @@ namespace HardwareStore.Controllers
 
         // GET: Things/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Thing == null)
             {
@@ -82,6 +82,10 @@ namespace HardwareStore.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (ThingExists(thing.Id))
+                {
+                    return NotFound();
+                }
                 _context.Add(thing);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Categories", new { id = thing.CategoryId } );
@@ -91,19 +95,20 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Things/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Thing == null)
             {
                 return NotFound();
             }
 
-            var thing = await _context.Thing.FindAsync(id);
+            var thing = await _context.Thing.Include(x=>x.Category).Where(x=> x.Id == id).FirstAsync();
             if (thing == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category
+                .Where(x => x.EntityId == thing.Category.EntityId), "Id", "Name", thing.CategoryId);
             return View(thing);
         }
 
@@ -112,7 +117,7 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,CategoryId")] Thing thing)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Price,CategoryId")] Thing thing)
         {
             if (id != thing.Id)
             {
@@ -137,14 +142,14 @@ namespace HardwareStore.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Categories", new { id = thing.CategoryId });
             }
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);
         }
         
         // GET: Things/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Thing == null)
             {
@@ -165,7 +170,7 @@ namespace HardwareStore.Controllers
         // POST: Things/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Thing == null)
             {
@@ -190,10 +195,10 @@ namespace HardwareStore.Controllers
                 }
             }
             
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Categories", new { id = thing.CategoryId });
         }
 
-        private bool ThingExists(int id)
+        private bool ThingExists(string id)
         {
             return _context.Thing.Any(e => e.Id == id);
         }
