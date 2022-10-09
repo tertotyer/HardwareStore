@@ -12,6 +12,7 @@ using HardwareStore.Logic;
 using NuGet.Packaging;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using HardwareStore.ViewModels;
 
 namespace HardwareStore.Controllers
 {
@@ -53,7 +54,7 @@ namespace HardwareStore.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
-            ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItem>>("cart");
+            ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
             return View();
         }
 
@@ -68,7 +69,7 @@ namespace HardwareStore.Controllers
                 _context.Add(order);
                 await _context.SaveChangesAsync();
 
-                var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart");
+                var cartItems = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
                 if (cartItems == null)
                 {
                     return NotFound();
@@ -79,7 +80,9 @@ namespace HardwareStore.Controllers
 
                 return RedirectToAction("Index", "Things");
             }
-            ViewData["ThingsCart"] = HttpContext.Session.GetObject<List<CartItem>>("cart");
+
+            ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
+
             return View(order);
         }
 

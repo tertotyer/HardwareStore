@@ -9,6 +9,7 @@ using HardwareStore.Data;
 using HardwareStore.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using HardwareStore.Logic;
 
 namespace HardwareStore.Controllers
 {
@@ -32,7 +33,7 @@ namespace HardwareStore.Controllers
 
         // GET: Categories/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id, string searchName,
+        public async Task<IActionResult> Details(int? pageNumber, int? id, string searchName,
             int minPrice = 0, int maxPrice = 10000)
         {
             if (id == null || _context.Category == null)
@@ -45,6 +46,7 @@ namespace HardwareStore.Controllers
             ViewData["MaxPrice"] = maxPrice;
             var category = await _context.Category.FindAsync(id);
             ViewData["CategoryName"] = category.Name;
+            ViewData["Id"] = id;
             ViewData["Entities"] = await _context.Entity.Include(x => x.Categories).ToListAsync();
 
 
@@ -59,11 +61,10 @@ namespace HardwareStore.Controllers
                 things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice + maxPrice / 10).OrderBy(t => t.Price);
             }
 
-            // Pagination
-            //int pageSize = 2;
-            //return View(await PaginatedList<Thing>.CreateAsync(things
-            //    .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
-            return View(things.Include(x => x.Images).ToList());
+            int pageSize = 9;
+            return View(await PaginatedList<Thing>.CreateAsync(things
+                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(things.Include(x => x.Images).ToList());
         }
 
         // GET: Categories/Create

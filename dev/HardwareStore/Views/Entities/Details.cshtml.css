@@ -99,6 +99,7 @@
 }
 
 .search-popup__button {
+    cursor: pointer;
     position: absolute;
     top: calc(50% - 9px);
     right: 30px;

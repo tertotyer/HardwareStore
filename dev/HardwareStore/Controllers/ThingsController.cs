@@ -84,7 +84,7 @@ namespace HardwareStore.Controllers
             {
                 _context.Add(thing);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Categories", new { id = thing.CategoryId } );
             }
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", thing.CategoryId);
             return View(thing);

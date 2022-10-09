@@ -1,7 +1,10 @@
 ﻿using HardwareStore.Data;
 using HardwareStore.Logic;
 using HardwareStore.Models;
+using HardwareStore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging.Signing;
 
 namespace HardwareStore.Controllers
 {
@@ -16,25 +19,28 @@ namespace HardwareStore.Controllers
 
         public IActionResult Index()
         {
-            var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart") ?? new List<CartItem>();
+            var cartItems = HttpContext.Session.GetObject<List<CartItemSession>>("cart") ?? new List<CartItemSession>();
             return View(cartItems);
         }
 
-        public IActionResult AddToCart(int? id)
+        public async Task<IActionResult> AddToCart(int? id, string imagePath)
         {
             if (id == null || _context.OrderItem == null)
             {
                 return NotFound();
             }
 
-            var cartItem = new CartItem {
+            var cartItem = new CartItemSession
+            {
                 ThingId = (int)id,
-                Thing = _context.Thing.Find(id)
+                Thing = await _context.Thing.FindAsync(id),
+                ImagePath = imagePath
             };
+
             HttpContext.Session.AddObject("cart", cartItem);
 
-            return RedirectToAction("Index");
-        } 
+            return RedirectToAction("Create", "Orders");
+        }
 
         public IActionResult RemoveFromCart(int? id)
         {
@@ -43,10 +49,10 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var cartItem = HttpContext.Session.GetObject<List<CartItem>>("cart").Where(x=> x.ThingId == id).First();
+            var cartItem = HttpContext.Session.GetObject<List<CartItemSession>>("cart").Where(x => x.ThingId == id).First();
             HttpContext.Session.RemoveObject("cart", ref cartItem);
-            
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Create", "Orders");
         }
 
         public IActionResult ChangeItemQuantity(int? id, int quantity)
@@ -56,12 +62,12 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var cartItems = HttpContext.Session.GetObject<List<CartItem>>("cart");
+            var cartItems = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
             cartItems.Where(x => x.ThingId == id).First().Quantity = quantity;
 
             HttpContext.Session.SetObject("cart", cartItems);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Create", "Orders");
         }
     }
 }

@@ -34,7 +34,7 @@ namespace HardwareStore.Controllers
 
         // GET: Entities/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id, string searchName,
+        public async Task<IActionResult> Details(int? pageNumber, int? id, string searchName,
             int minPrice = 0, int maxPrice = 10000)
         {
             if (id == null || _context.Entity == null)
@@ -47,8 +47,8 @@ namespace HardwareStore.Controllers
             ViewData["MaxPrice"] = maxPrice;
             var entity = await _context.Entity.FindAsync(id);
             ViewData["EntityName"] = entity.Name;
+            ViewData["Id"] = id;
             ViewData["Entities"] = await _context.Entity.Include(x => x.Categories).ToListAsync();
-
 
             var things = from t in _context.Thing where t.Category.EntityId == id select t;
             if (!String.IsNullOrWhiteSpace(searchName))
@@ -61,11 +61,11 @@ namespace HardwareStore.Controllers
                 things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice + maxPrice / 10).OrderBy(t => t.Price);
             }
 
-            // Pagination
-            //int pageSize = 2;
-            //return View(await PaginatedList<Thing>.CreateAsync(things
-            //    .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
-            return View(things.Include(x => x.Images).ToList());
+
+            int pageSize = 9;
+            return View(await PaginatedList<Thing>.CreateAsync(things
+                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(things.Include(x => x.Images).ToList());
         }
 
         // GET: Entities/Create

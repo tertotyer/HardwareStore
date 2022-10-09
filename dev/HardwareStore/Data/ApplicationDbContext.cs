@@ -10,6 +10,7 @@ namespace HardwareStore.Data
             : base(options)
         {
         }
+
         public DbSet<HardwareStore.Models.Entity> Entity { get; set; }
         public DbSet<HardwareStore.Models.Category> Category { get; set; }
         public DbSet<HardwareStore.Models.Thing> Thing { get; set; }

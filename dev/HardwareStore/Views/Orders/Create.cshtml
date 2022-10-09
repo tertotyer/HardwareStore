@@ -2,56 +2,125 @@
 
 @{
     ViewData["Title"] = "Create";
-    var deliveryMethods = new SelectList(new string[] { "Самовывоз", "Доставка домой" });
-}
-
-<h1>Create</h1>
-
-<h4>Order</h4>
-@if (ViewBag.CartItems != null)
-{
+    var deliveryMethods = new SelectList(new string[] { "Самовывоз", "Доставка курьером" });
     int totalCost = 0;
-    @foreach (var cartItem in ViewBag.CartItems)
-    {
-        <p>@cartItem.Thing.Name @cartItem.Thing.Price</p>
-        totalCost += cartItem.Thing.Price;
-    }
-    <h4>TotalCost: @totalCost</h4>
 }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DateCreated" value="@DateTime.Now" class="form-control" />
-            <div class="form-group">
-                <label asp-for="NameBuyer" class="control-label"></label>
-                <input asp-for="NameBuyer" class="form-control" />
-                <span asp-validation-for="NameBuyer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeliveryMethod" class="control-label"></label>
-                <select asp-for="DeliveryMethod" class="form-control" asp-items="deliveryMethods"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+@if (ViewBag.CartItems.Count != 0 )
+{
+    <section class="cart-header">
+        <div class="container cart-header__container">
+            <div class="cart-header__title">Ваш заказ</div>
+        </div>
+    </section>
+    <section class="cart section__bottom-border ">
+        <div class="container cart__container">
+            <div class="basket__list">
+                @foreach (var cartItem in ViewBag.CartItems)
+                {
+                    totalCost += cartItem.Thing.Price;
+                    string imagePath = $"~/images/{cartItem.ImagePath}";
+                    <p>@cartItem.Thing.Name @cartItem.Thing.Price @cartItem.ImagePath</p>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+                    <div class="basket__item section__bottom-border">
+                        <div class="basket__item-column basket__item-column-left">
+                            <div class="basket__item-img">
+                                <img src="@imagePath" asp-append-version="true" />          <!-- Превью товара-->
+                            </div>
+                            <div class="basket__item-title">
+                                <a asp-action="Details" asp-controller="Things" asp-route-id="@cartItem.ThingId">
+                                    @cartItem.Thing.Name                                        <!-- Имя товара-->
+                                </a>
+                            </div>
+                        </div>
+                        <div class="basket__item-column">
+                            <div class="basket__item-count">
+                                <input type="number" min="0" class="basket__item-count-input" value="@cartItem.Quantity"> <!-- Инпут поле количества товаров-->
+                            </div>
+                            <div class="basket__item-price currency">
+                                @cartItem.Thing.Price руб                                      <!-- Цена товара-->
+                            </div>
+                        </div>
+                        <a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@cartItem.ThingId">
+                            <div class="basket__item-delete">
+                                <!-- Кнопка удалить -->
+                            </div>
+                        </a>
+                    </div>
+                }
 
+                <form asp-action="Create">
+                    <div class="basket__list-footer">
+                        <div class="basket__order">
+                            <section class="cart-section step1">
+                                <header class="cart-section__header">
+                                    <h2 class="cart-section__title">Личные данные</h2>
+                                </header>
+                                <div class="cart-section__content" style="height: max-content;">
+                                    <input type="hidden" asp-for="DateCreated" value="@DateTime.Now" class="form-control" />
+                                    <div class="cart-delivery-methods__label">
+
+                                        <input class="cart-delivery-methods__input" type="text" id="name" asp-for="NameBuyer" />
+                                        <label asp-for="NameBuyer">Имя</label>
+                                        <span asp-validation-for="NameBuyer" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="cart-delivery-methods__label">
+                                        <input asp-for="PhoneNumber" class="cart-delivery-methods__input" placeholder="+375 (__) ___-__-__" />
+                                        <label asp-for="PhoneNumber" class="control-label"></label>
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="cart-delivery-methods__label">
+                                        <input asp-for="Email" class="cart-delivery-methods__input" />
+                                        <label asp-for="Email" class="control-label"></label>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="cart-delivery-methods__label">
+                                        <select asp-for="DeliveryMethod" class="cart-delivery-methods__input" asp-items="deliveryMethods"></select>
+                                        <label asp-for="DeliveryMethod" class="control-label"></label>
+                                    </div>
+
+                                </div>
+                            </section>
+                        </div>
+                        <div class="basket__total">
+                            <div class="basket__total-count-wrapper">
+                                <div class="basket__total-count">@ViewBag.CartItems.Count</div> <!-- Всего товаров в корзине -->
+                                <div class="basket__total-count-desc">Товаров</div>
+                            </div>
+                            <div class="basket__total-price-wrapper">
+                                <div class="basket__total-price">@totalCost</div> <!-- Полная стоимость корзины -->
+                                <div class="basket__total-price-desc">Рублей</div>
+                            </div>
+                            <!-- Кнопка оформить заказ -->
+                            <input type="submit" value="Оформить" class="basket__button-continue button" />
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </section>
+}
+else
+{
+    <section class="cart-header">
+        <div class="container cart-header__container">
+            <div class="cart-header__title">Ваш заказ</div>
+        </div>
+    </section>
+    <section class="cart-empty section__bottom-border">
+        <div class="container cart-empty__container">
+            <div class="cart-empty__title">
+                В корзину пока ничего не добавлено
+            </div>
+            <div class="cart-empty__desc">
+                Выберите подходящую технику из коллекции CATA
+            </div>
+        </div>
+
+    </section>
+}

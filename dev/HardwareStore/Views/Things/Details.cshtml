@@ -4,38 +4,119 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<section class="product bg-dark section__bottom-border">
+    <div class="container product__container">
+        <div class="product__header category__header section__bottom-border">
+            <div class="section__title product__title">
+                <span class="product__title-inner">@Model.Name</span> |
+                <span class="product__title-inner">
+                    <a class="admin-text" asp-controller="Images" asp-action="Create"
+                       asp-route-sendThingId="@Model.Id">Add image</a> |
+                </span>
+                <span class="product__title-inner">
+                    <a class="admin-text" asp-controller="Characteristics" asp-action="Create"
+                       asp-route-sendThingId="@Model.Id">Add characteristic</a>
+                </span>
 
-<div>
-    <h4>Thing</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-
-    Images :
-    @foreach (var image in Model.Images.ToList())
-    {
-        var imagePath = $"~/images/{image.ImagePath}";
-        <div class="block-image">
-            <img src="@imagePath" asp-append-version="true" />
+            </div>
         </div>
-    }
+        <div class="product__content">
+            <div class="product__slider-column">
+                <div class="image-slider swiper-container">
+                    <div class="image-slider__wrapper swiper-wrapper">
+                        @if (Model.Images.Count() != 0)
+                        {
+                            @foreach (var image in Model.Images)
+                            {
+                                string imagePath = $"~/images/{image.ImagePath}"; 
 
-    <div>
-        Characteristics:
-        @foreach (var ch in Model.Characteristics.ToList())
-        {
-            <div>@ch.Name : @ch.Data</div>
-        }
+                                <div class="image-slider__slide swiper-slide">
+                                    <div class="image-slider__image">
+                                        <img src="@imagePath" asp-append-version="true" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            string imagePath = "~/images/null_image.jpg";
+                            <div class="image-slider__slide swiper-slide">
+                                <div class="image-slider__image">
+                                    <img src="@imagePath" asp-append-version="true" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+                <div class="image-mini-slider swiper-container">
+                    <div class="image-mini-slider__wrapper swiper-wrapper">
+                        @if (Model.Images.Count() != 0)
+                        {
+                            @foreach (var image in Model.Images)
+                            {
+                                string imagePath = $"~/images/{image.ImagePath}";
+                                <div class="image-mini-slider__slide swiper-slide">
+                                    <div class="image-mini-slider__image">
+                                        <img src="@imagePath" asp-append-version="true" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            string imagePath = "~/images/null_image.jpg";
+                            <div class="image-mini-slider__slide swiper-slide">
+                                <div class="image-mini-slider__image">
+                                    <img src="@imagePath" asp-append-version="true" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="specification__specification">
+                <div class="specification__title">
+                    <span class="specification__title-inner">Характеристики</span>
+                </div>
+                <table class="specification__specification-items-wrapper specification-items-wrapper">
+                    <!-- Таблица, хранящая характеристики -->
+                    <tbody class="specification__specification_items specification-items">
+                        @foreach (var item in Model.Characteristics)
+                        {
+                            <tr class="specification-item">
+                                <td class="specification-item__desc">@item.Name</td>    <!-- Название поля -->
+                                <td class="specification-item__value">@item.Data</td>       <!-- Значение -->
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="specification__buttons-wrapper">
+                    @if (Model.Images.Count() != 0)
+                    {
+                        string imagePath = Model.Images.First().ImagePath;
+                        <a asp-controller="Cart" asp-action="AddtoCart"
+                       asp-route-id="@Model.Id" asp-route-imagePath="@imagePath" 
+                       class="button button--mobile-wide specification__button">Купить</a>
+                    }
+                    else
+                    {
+                        string imagePath = "null_image.jpg";
+                        <a asp-controller="Cart" asp-action="AddtoCart"
+                       asp-route-id="@Model.Id" asp-route-imagePath="@imagePath"
+                       class="button button--mobile-wide specification__button">Купить</a>
+                    }
+                      <!-- Кнопка купить -->
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<script src="~/scripts/menu-column.js"></script>
+<script src="~/scripts/swiper-product.js"></script>

@@ -1,0 +1,140 @@
+﻿.product__container {
+    padding: 60px 0px;
+}
+
+.product__header {
+    display: flex;
+    justify-content: center;
+}
+
+.product__title {
+    padding-bottom: 20px;
+}
+
+.product__title-inner {
+    font-family: 'Montserrat', Arial, sans-serif;
+    border-bottom: none;
+}
+
+.product__content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 100px 0;
+}
+
+.product__slider-column {
+    display: inline-block;
+    width: 50%;
+}
+
+.specification__specification {
+    display: inline-block;
+    width: 50%;
+    margin-left: 140px;
+    vertical-align: top;
+}
+
+
+
+
+
+/* ------ Product Specification ----------- */
+
+.specification__container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 100px 0;
+}
+
+.specification__left-column {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+}
+
+/* ------------------------ */
+
+
+
+.specification__title {
+    font-weight: 400;
+    font-size: 22px;
+    font-family: Akzidenz-Ext,Helvetica,Arial,sans-serif;
+    line-height: 1.14;
+    letter-spacing: .2px;
+}
+
+.specification__title-inner {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #ef6f2e;
+}
+
+.specification__specification-items-wrapper {
+    /* height: 260px; */
+    margin-top: 35px;
+    overflow: hidden;
+    transition: height .3s ease;
+    width: 100%;
+    display: block;
+}
+
+.specification__specification-items {
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    display: block;
+}
+
+.specification-item {
+    font-family: Akzidenz,Helvetica,Arial,sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.25;
+    letter-spacing: .5px;
+    width: 410px;
+    max-width: 100%;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .specification-item .specification-item__desc, .specification-item p {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        position: relative;
+        padding-right: 15px;
+        margin-right: 10px;
+    }
+
+    .specification-item .specification-item__value, .specification-item span {
+        text-align: right;
+        white-space: nowrap;
+        display: block;
+        position: relative;
+    }
+
+        .specification-item .specification-item__value:after, .specification-item span:after {
+            content: "";
+            position: absolute;
+            left: -35px;
+            height: 100%;
+            width: 25px;
+            z-index: 10;
+            box-shadow: inset -15px 0 10px #221e1c;
+        }
+
+.specification__buttons-wrapper {
+    margin-top: 50px;
+    margin-left: -26px;
+}
+
+.specification__button {
+    display: inline-block;
+    margin-left: 26px;
+}

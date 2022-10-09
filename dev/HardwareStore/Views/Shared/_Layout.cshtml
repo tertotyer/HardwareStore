@@ -5,22 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - HardwareStore</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HardwareStore.styles.css" asp-append-version="true" />
     <link rel="icon" type="image/png" href="~/cata.ico" sizes="32x32" />
-
-
-
 </head>
 
 <body>
 
     <div class="wrapper">
-
         @await Html.PartialAsync("_Header")
 
         @RenderBody()

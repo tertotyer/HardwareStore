@@ -1,4 +1,4 @@
-﻿@model ICollection<Thing>
+﻿@model HardwareStore.Logic.PaginatedList<Thing>
 
 @{
     ViewData["Title"] = "Details";
@@ -15,11 +15,23 @@
                         <ul class="category-menu__subcategory-list category-menu__subcategory-list--hide ">
                             @foreach (var category in entity.Categories)
                             {
-                                <li class="category-menu__subcategory-title">
-                                    <div class="category-menu__sub-item">
-                                        <a asp-action="Details" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
-                                    </div>
-                                </li>
+
+                                if (User.IsInRole("admin"))
+                                {
+                                    <li class="category-menu__subcategory-title">
+                                        <div class="category-menu__sub-item">
+                                            <a asp-action="Details" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+                                        </div>
+                                    </li>
+                                }
+                                else if (category.Name != "Void")
+                                {
+                                    <li class="category-menu__subcategory-title">
+                                        <div class="category-menu__sub-item">
+                                            <a asp-action="Details" asp-controller="Categories" asp-route-id="@category.Id">@category.Name</a>
+                                        </div>
+                                    </li>
+                                }
                             }
                         </ul>
                     </li>
@@ -30,6 +42,7 @@
             <div class="category__header section__bottom-border">
                 <div class="section__title category__title">
                     <span class="category__title-inner">@ViewBag.CategoryName</span>
+                    <span class="category__title-inner"><a class="admin-text" asp-action="Create" asp-controller="Things" asp-route-sendCategoryId="@ViewBag.Id">Add thing</a></span>
                 </div>
                 @using (Html.BeginForm())
                 {
@@ -49,13 +62,14 @@
                                     <input type="number" placeholder="До" min="0" name="maxPrice" class="cart-delivery-methods__input cart-delivery-methods__input__right" />
                                     <label class="control-label">Цена:</label>
                                 }
-
                             </div>
                         </div>
                         <div class="catalog-options__search">
                             <div class="cart-delivery-methods__label">
                                 <input type="text" name="searchName" value="@ViewData["SearchName"]" placeholder="Поиск" class="cart-delivery-methods__input catalog-options__search-input" />
-                                <button type="submit" class="search-popup__button">Искать</button>
+                                <div class="search-popup__button">
+                                    <input type="submit" value="" asp-route-pageNumber="1" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -75,8 +89,7 @@
                     else imagePath = "~/images/null_image.jpg";
 
                     <div class="product-item">
-                        <a class="product-item__link">
-
+                        <a asp-action="Details" asp-controller="Things" asp-route-id="@thing.Id" class="product-item__link">
                             <div class="product-item__header">
                                 <img class="product-item__img" src="@imagePath" asp-append-version="true" />
                             </div>
@@ -93,32 +106,33 @@
         </div>
 
     </div>
+
+    @*Paginataion*@
+
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <a asp-action="Details"
+       asp-route-id="@ViewData["Id"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-searchName="@ViewData["SearchName"]"
+       asp-route-minPrice="@ViewData["MinPrice"]"
+       asp-route-maxPrice="@ViewData["MaxPrice"]"
+       class="button @prevDisabled">
+        Previous
+    </a>
+    <a asp-action="Details"
+       asp-route-id="@ViewData["Id"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-searchName="@ViewData["SearchName"]"
+       asp-route-minPrice="@ViewData["MinPrice"]"
+       asp-route-maxPrice="@ViewData["MaxPrice"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
 </section>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="~/scripts/menu-column.js"></script>
-
-
-@*Paginataion*@
-@*
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-searchName="@ViewData["SearchName"]"
-   asp-route-minPrice="@ViewData["MinPrice"]"
-   asp-route-maxPrice="@ViewData["MaxPrice"]"
-   class="button @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-searchName="@ViewData["SearchName"]"
-   asp-route-minPrice="@ViewData["MinPrice"]"
-   asp-route-maxPrice="@ViewData["MaxPrice"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>*@
