@@ -41,9 +41,10 @@
             @Html.DisplayFor(model => model.DeliveryMethod)
         </dd>
         <dd>
+            <br />
             @foreach (var cartItem in Model.CartItems)
             {
-                <a>@cartItem.Thing.Name - @cartItem.Quantity </a> <br />
+                <a asp-action="Details" asp-controller="Things" asp-route-id="@cartItem.ThingId">@cartItem.Thing.Name - @cartItem.Quantity </a> <br />
             }
         </dd>
     </dl>

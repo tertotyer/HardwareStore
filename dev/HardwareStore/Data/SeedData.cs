@@ -37,7 +37,7 @@ namespace HardwareStore.Data
                     new Entity { Name = "Стиральные машины" },
                     new Entity { Name = "Посуда" },
                     new Entity { Name = "Холодильники" },
-                    new Entity { Name = "Очистители воздуха" }
+                    new Entity { Name = "Воздухоочистители" }
                     );
                 context.SaveChanges();
 

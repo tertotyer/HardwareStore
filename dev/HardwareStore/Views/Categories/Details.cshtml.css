@@ -99,9 +99,8 @@
 }
 
 .search-popup__button {
-    cursor: pointer;
     position: absolute;
-    top: calc(50% - 9px);
+    top: calc(50% - 14px);
     right: 30px;
     width: 18px;
     height: 18px;
@@ -215,6 +214,7 @@
 /* ----Product-item---------------------------- */
 
 .product-item {
+    vertical-align: top;
     display: inline-block;
     width: 300px;
     margin: 0 30px 30px 0;
@@ -273,4 +273,102 @@
     font-family: Akzidenz, Helvetica, Arial, sans-serif;
     line-height: 1.79;
     text-align: left;
+}
+
+
+/* ------Navigation ------ */
+.category__navigation {
+    display: flex;
+    justify-content: center;
+}
+
+.category__navigation-button:not(:last-child) {
+    margin-right: 30px;
+}
+
+.category__navigation-button {
+    font-size: 12px;
+    padding: 10px 15px;
+    text-transform: none;
+}
+
+/* -------- BREAKEPOINTS ------------- */
+@media (max-width: 1320px) and (min-width: 768px) {
+}
+
+@media (max-width: 979px) {
+    .category__menu-column {
+        display: none;
+    }
+
+    .category__content-column {
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .category__container {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .content {
+        padding-top: 30px;
+        padding-bottom: 15px;
+        margin-right: -10px;
+        margin-bottom: -15px;
+    }
+
+    .cart-delivery-methods__label {
+        width: 285px;
+        font-size: 14px;
+    }
+
+    .cart-delivery-methods__input {
+        font-size: 14px;
+    }
+
+    .product-item {
+        width: calc(50% - 10px);
+        margin: 0 10px 15px 0;
+    }
+
+    .product-item__header {
+        width: 100%;
+        height: calc(50vw - 20px);
+    }
+
+    .product-item__img {
+        max-height: 80%;
+        max-width: 80%;
+    }
+
+    .product-item__title {
+        font-size: 14px;
+    }
+
+    .product-item__price {
+        font-size: 12px;
+    }
+}
+
+@media(max-width: 600px) {
+    .category__header-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cart-delivery-methods__label {
+        padding: 10px;
+    }
+}
+
+@media(max-width: 480px) {
+    .product-item__title {
+        font-size: 12px;
+    }
+
+    .product-item__price {
+        font-size: 10px;
+    }
 }

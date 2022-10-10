@@ -66,7 +66,7 @@ namespace HardwareStore.Controllers
         }
 
         // GET: Things/Create
-        public IActionResult Create(int sendCategoryId)
+        public IActionResult Create(int? sendCategoryId)
         {
             ViewData["SendCategoryId"] = sendCategoryId;
             ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
@@ -172,29 +172,35 @@ namespace HardwareStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Thing == null)
+            var thing = await _context.Thing.Include(x=> x.Images).Include(x=> x.Characteristics)
+                .Include(x => x.CartItems).Where(x=> x.Id == id).FirstAsync();
+
+            foreach(var characteristic in thing.Characteristics)
             {
-                return Problem("Entity set 'ApplicationDbContext.Thing'  is null.");
+                _context.Characteristic.Remove(characteristic);
             }
 
-            var thing = await _context.Thing.Include(x=> x.Images).Where(x=> x.Id == id).FirstAsync();
-            var images = thing.Images;
+            foreach (var image in thing.Images)
+            {
+                _context.Image.Remove(image);
+                var imagePath = image.ImagePath;
+                if (System.IO.File.Exists("wwwroot/images/things/" + imagePath))
+                {
+                    System.IO.File.Delete("wwwroot/images/things/" + imagePath);
+                }
+            }
+
+            foreach (var cartItem in thing.CartItems)
+            {
+                _context.OrderItem.Remove(cartItem);
+            }
 
             if (thing != null)
             {
                 _context.Thing.Remove(thing);
             }
             await _context.SaveChangesAsync();
-
-            foreach (var image in images)
-            {
-                var imagePath = image.ImagePath;
-                if (System.IO.File.Exists("wwwroot/images/" + imagePath))
-                {
-                    System.IO.File.Delete("wwwroot/images/" + imagePath);
-                }
-            }
-            
+           
             return RedirectToAction("Details", "Categories", new { id = thing.CategoryId });
         }
 

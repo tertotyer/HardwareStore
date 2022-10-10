@@ -90,7 +90,7 @@
                         string imagePath;
                         if (thing.Images.Count() != 0)
                         {
-                            imagePath = $"~/images/{thing.Images.First().ImagePath}";
+                            imagePath = $"~/images/things/{thing.Images.First().ImagePath}";
                         }
                         else imagePath = "~/images/null_image.jpg";
 
@@ -109,33 +109,33 @@
                     }
                 }
             </div>
+            @*Paginataion*@
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+            <div class="category__navigation">
+                <a asp-action="Details"
+                   asp-route-id="@ViewData["Id"]"
+                   asp-route-pageNumber="@(Model.PageIndex - 1)"
+                   asp-route-searchName="@ViewData["SearchName"]"
+                   asp-route-minPrice="@ViewData["MinPrice"]"
+                   asp-route-maxPrice="@ViewData["MaxPrice"]"
+                   class="button category__navigation-button @prevDisabled">
+                    Предыдущая
+                </a>
+                <a asp-action="Details"
+                   asp-route-id="@ViewData["Id"]"
+                   asp-route-pageNumber="@(Model.PageIndex + 1)"
+                   asp-route-searchName="@ViewData["SearchName"]"
+                   asp-route-minPrice="@ViewData["MinPrice"]"
+                   asp-route-maxPrice="@ViewData["MaxPrice"]"
+                   class="button category__navigation-button @nextDisabled">
+                    Следующая
+                </a>
+            </div>
         </div>
-
     </div>
-    @*Paginataion*@
-
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-    <a asp-action="Details"
-       asp-route-id="@ViewData["Id"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-searchName="@ViewData["SearchName"]"
-       asp-route-minPrice="@ViewData["MinPrice"]"
-       asp-route-maxPrice="@ViewData["MaxPrice"]"
-       class="button @prevDisabled">
-        Previous
-    </a>
-    <a asp-action="Details"
-       asp-route-id="@ViewData["Id"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-searchName="@ViewData["SearchName"]"
-       asp-route-minPrice="@ViewData["MinPrice"]"
-       asp-route-maxPrice="@ViewData["MaxPrice"]"
-       class="btn btn-default @nextDisabled">
-        Next
-    </a>
 </section>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

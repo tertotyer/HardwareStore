@@ -54,7 +54,8 @@ namespace HardwareStore.Controllers
         [AllowAnonymous]
         public IActionResult Create()
         {
-            ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
+            ViewBag.CartItems = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
+
             return View();
         }
 
@@ -82,7 +83,7 @@ namespace HardwareStore.Controllers
                 HttpContext.Session.Clear();
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Things");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItemSession>>("cart");

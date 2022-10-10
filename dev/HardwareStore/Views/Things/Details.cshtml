@@ -38,7 +38,7 @@
                         {
                             @foreach (var image in Model.Images)
                             {
-                                string imagePath = $"~/images/{image.ImagePath}";
+                                string imagePath = $"~/images/things/{image.ImagePath}";
 
                                 <div class="image-slider__slide swiper-slide">
                                     <div class="image-slider__image">
@@ -67,7 +67,7 @@
                         {
                             @foreach (var image in Model.Images)
                             {
-                                string imagePath = $"~/images/{image.ImagePath}";
+                                string imagePath = $"~/images/things/{image.ImagePath}";
                                 <div class="image-mini-slider__slide swiper-slide">
                                     <div class="image-mini-slider__image">
                                         <img src="@imagePath" asp-append-version="true" />

@@ -11,11 +11,15 @@
             <a asp-controller="Home" asp-action="Index">
                 <img class="header__logo" src="~/images/icons/logo.png">
             </a>
+            
+            <div class="header__burger">
+                <span></span>
+            </div>
         </div>
         <nav class="header__menu menu">
             <ul class="menu__list">
                 <li class="menu__item">
-                    <a href="" class="menu__link">Каталог</a>
+                    <span href="" class="menu__link">Каталог</span>
                     <ul class="sub-menu__list">
                         @foreach (var entity in entities)
                         {
@@ -28,14 +32,16 @@
                     </ul>
                 </li>
                 <li class="menu__item">
-                    <a href="" class="menu__link">Контакты</a>
+                    <a asp-action="Contacts" asp-controller="Home" class="menu__link">Контакты</a>
                 </li>
                 <li class="menu__item">
-                    <a href="" class="menu__link">Информация</a>
+                    <a asp-action="Info" asp-controller="Home" class="menu__link">Информация</a>
                 </li>
                 <partial name="_LoginPartial" />
-
             </ul>
+            <a asp-action="Create" asp-controller="Orders" >
+                <img class="header__shopping-cart" src="~/images/icons/shopping-cart.svg">
+            </a>
         </nav>
     </div>
 </header>

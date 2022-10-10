@@ -67,7 +67,7 @@ namespace HardwareStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/things");
                 string uniqueFileName = Guid.NewGuid().ToString() + "_" + imageCreateModel.Image.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using var fstr = new FileStream(filePath, FileMode.Create);

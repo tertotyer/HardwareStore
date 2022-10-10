@@ -3,9 +3,9 @@
 }
 
 <section class="admin">
-    <a class="catalog__title-inner" asp-controller="Entities">Entities</a> ->
-    <a class="catalog__title-inner" asp-controller="Categories">Categories</a> ->
-    <a class="catalog__title-inner" asp-controller="Things">Things</a> ->
+    <a asp-controller="Entities">Entities</a> ->
+    <a asp-controller="Categories">Categories</a> ->
+    <a asp-controller="Things">Things</a> ->
     <a asp-controller="Images">Images</a> +
     <a asp-controller="Characteristics">Characteristics</a>
     <br />
@@ -13,6 +13,11 @@
     <br />
     <a asp-controller="Orders">Orders</a>
     <br />
-    <a>Load file xslx</a>
+    <br /><br />
+    <h3>Выберите файл для загрузки</h3>
+    <form asp-action="LoadFile" asp-controller="Admin" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" /><br><br />
+        <input type="submit" value="Загрузить" />
+    </form>
 </section>
 

@@ -1,22 +1,32 @@
 ﻿
-<footer>
-    <div class="container footer__container">
-        <ul class="footer__list">
-            <li class="footer__item">
-                <a href="#">Информация</a>
-            </li>
-            <li class="footer__item">
-                <a href="#">Информация</a>
-            </li>
-            <li class="footer__item">
-                <a href="#">Информация</a>
-            </li>
-            <li class="footer__item">
-                <a href="#">Информация</a>
-            </li>
-            <li class="footer__item">
-                <a href="#">Информация</a>
-            </li>
-        </ul>
+<footer class="footer">
+    <div class="footer__category-list">
+        <a asp-action="Index" asp-controller="Home" class="footer__category-list-item">
+            <img src="~/images/icons/catalog.svg">
+            <span>Каталог</span>
+        </a>
+        <a asp-action="Info" asp-controller="Home" class="footer__category-list-item">
+            <img src="~/images/icons/info.svg">
+            <span>Информация</span>
+        </a>
+        <a asp-action="Contacts" asp-controller="Home" class="footer__category-list-item">
+            <img src="~/images/icons/phone.svg">
+            <span>Контакты</span>
+        </a>
+        <a asp-action="Create" asp-controller="Orders" class="footer__category-list-item">
+            <img src="~/images/icons/shopping-cart.svg">
+            <span>Корзина</span>
+        </a>
+    </div>
+    <div class="footer__social-list">
+        <a href="#" class="footer__social-list-item">
+            <img src="~/images/icons/Social/youtube.svg">
+        </a>
+        <a href="#" class="footer__social-list-item">
+            <img src="~/images/icons/Social/instagram.svg">
+        </a>
+    </div>
+    <div class="footer__desc">
+        <span>Официальный магазин CATA в Беларуси.© 2022</span>
     </div>
 </footer>
