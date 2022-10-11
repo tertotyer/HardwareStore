@@ -25,8 +25,9 @@
 	  <Folder Include="Data\Migrations\" />
 	  <Folder Include="wwwroot\documents\admin\" />
 	  <Folder Include="wwwroot\images\entities\" />
-	  <Folder Include="wwwroot\images\icons\" />
 	</ItemGroup>
+
+	<ProjectExtensions><VisualStudio><UserProperties properties_4servicedependencies_1json__JsonSchema="https://appsemble.app/api.json" /></VisualStudio></ProjectExtensions>
 
 
 </Project>

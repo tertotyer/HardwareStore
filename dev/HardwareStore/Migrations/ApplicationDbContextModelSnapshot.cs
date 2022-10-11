@@ -45,7 +45,7 @@ namespace HardwareStore.Migrations
 
                     b.HasIndex("ThingId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Category", b =>
@@ -66,7 +66,7 @@ namespace HardwareStore.Migrations
 
                     b.HasIndex("EntityId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Characteristic", b =>
@@ -90,7 +90,7 @@ namespace HardwareStore.Migrations
 
                     b.HasIndex("ThingId");
 
-                    b.ToTable("Characteristic");
+                    b.ToTable("Characteristic", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Entity", b =>
@@ -109,7 +109,7 @@ namespace HardwareStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Entity");
+                    b.ToTable("Entity", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Image", b =>
@@ -130,7 +130,7 @@ namespace HardwareStore.Migrations
 
                     b.HasIndex("ThingId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Image", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Order", b =>
@@ -164,7 +164,7 @@ namespace HardwareStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("HardwareStore.Models.Thing", b =>
@@ -188,7 +188,7 @@ namespace HardwareStore.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Thing");
+                    b.ToTable("Thing", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

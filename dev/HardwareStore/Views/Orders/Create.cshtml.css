@@ -1,7 +1,7 @@
 ﻿/* ------------ */
 .cart-header__container {
     position: relative;
-    padding-top: 100px;
+    padding-top: 30px;
 }
 
 .cart-header__title {
@@ -327,4 +327,145 @@ select, input {
     background-color: transparent;
     outline: 0;
     box-shadow: none;
+}
+
+
+/* -------- BREAKEPOINTS ------------- */
+
+@media (max-width: 1320px) {
+    .basket__item-img {
+        margin-right: 30px;
+    }
+
+    .basket__total {
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .basket__total-count-wrapper {
+        width: 50%;
+    }
+
+    .basket__total-price-wrapper {
+        width: 50%;
+    }
+
+    .basket__button-continue {
+        width: auto;
+        margin-top: 50px;
+    }
+}
+
+@media (max-width: 979px) {
+    .basket__item {
+        padding: 15px 30px;
+    }
+
+    .basket__item-price, .basket__item-title {
+        font-size: 16px;
+    }
+
+    .basket__item-img {
+        height: 80px;
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .basket__item-count, .basket__item-price {
+        width: 45%;
+    }
+
+    .basket__list-footer {
+        flex-wrap: wrap;
+        padding: 0;
+    }
+
+    .basket__order, .basket__total {
+        width: 100%;
+    }
+
+    .basket__order {
+        border-bottom: 1px solid hsla(0,0%,100%,.1);
+        border-right: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .cart__container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .basket__item {
+        padding: 10px 10px;
+    }
+
+    .basket__item-count-input, .cart-delivery-methods__input {
+        height: 35px;
+    }
+
+    .basket__item-count, .basket__item-price {
+        width: 100px;
+    }
+
+    .basket__item-delete {
+        top: 10px;
+        right: 10px;
+    }
+
+    .basket__item-price, .basket__item-title,
+    .basket__total-price-desc, .basket__total-count-desc,
+    .cart-delivery-methods__label, .cart-delivery-methods__input {
+        font-size: 14px;
+    }
+
+    .cart-section__title, .basket__total-price, .basket__total-count {
+        font-size: px;
+    }
+
+    .cart-section__content {
+        padding-top: 30px;
+    }
+}
+
+@media(max-width: 767px) and (min-width: 480px) {
+    .basket__item-column-left {
+        width: calc(100% - 150px)
+    }
+
+    .basket__item-title {
+        width: calc(100% - 80px);
+        max-width: 400px;
+    }
+
+    .basket__item-column-right {
+        width: 150px;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+}
+
+@media(max-width: 480px) {
+    .basket__item {
+        height: 100px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .basket__item-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .basket__item-column {
+        position: relative;
+        width: 100%;
+        padding-left: 90px;
+    }
+
+    .basket__item-title {
+        width: 100%;
+    }
 }

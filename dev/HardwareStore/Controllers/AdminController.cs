@@ -108,8 +108,6 @@ namespace HardwareStore.Controllers
 
         public void ParseDocument(string filePath)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
             using (ExcelPackage package = new ExcelPackage(new FileInfo(filePath)))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
