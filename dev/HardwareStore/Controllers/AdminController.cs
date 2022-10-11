@@ -58,23 +58,36 @@ namespace HardwareStore.Controllers
         /// </summary>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-
-
+        /// 
         [HttpPost]
-        public IActionResult LoadFile(IFormFile uploadedFile)
+        public IActionResult ExcelWork(IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                string filePath = LoadFile(uploadedFile);
+                ParseDocument(filePath);
+                DeleteFile(filePath);
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        public string LoadFile(IFormFile uploadedFile)
         {
             if (uploadedFile != null)
             {
                 string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "documents/admin");
                 string filePath = Path.Combine(uploadsFolder, uploadedFile.FileName);
 
-                using var fstr = new FileStream(filePath, FileMode.Create);
-                uploadedFile.CopyTo(fstr);
-
-                ParseDocument(filePath);
-                return RedirectToAction(nameof(Index));
+                using (var fstr = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadedFile.CopyTo(fstr);
+                }
+                
+                return filePath;
             }
-            return View();
+            return null;
         }
 
         public void DeleteFile(string filePath)

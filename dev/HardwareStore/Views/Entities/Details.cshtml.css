@@ -16,7 +16,6 @@
     padding-bottom: 20px;
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: 400;
 }
 
     .category__title:before {
@@ -232,7 +231,6 @@
 
 .product-item__title {
     display: block;
-    font-weight: 500px;
     max-height: 4.5em;
     margin-top: 18px;
     overflow: hidden;

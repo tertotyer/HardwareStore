@@ -15,8 +15,9 @@
     <br />
     <br /><br />
     <h3>Выберите файл для загрузки</h3>
-    <form asp-action="LoadFile" asp-controller="Admin" method="post" enctype="multipart/form-data">
-        <input type="file" name="uploadedFile" /><br><br />
+    <form asp-action="ExcelWork" asp-controller="Admin" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" 
+            accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" /><br><br />
         <input type="submit" value="Загрузить" />
     </form>
 </section>
