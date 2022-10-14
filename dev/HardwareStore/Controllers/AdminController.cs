@@ -53,12 +53,8 @@ namespace HardwareStore.Controllers
             return View(role);
         }
 
-        /// <summary>
-        /// Excel 
-        /// </summary>
-        /// <param name="uploadedFile"></param>
-        /// <returns></returns>
-        /// 
+        // Parse Excel document
+
         [HttpPost]
         public IActionResult ExcelWork(IFormFile uploadedFile)
         {
@@ -115,7 +111,7 @@ namespace HardwareStore.Controllers
 
                 var things = _context.Thing.ToList();
 
-                for (int i = 2; i < int.MaxValue; i++)
+                for (int i = 3; i < int.MaxValue; i++)
                 {
                     var id = worksheet.Cells[i, 5].Value;
                     var name = worksheet.Cells[i, 7].Value;
@@ -130,11 +126,17 @@ namespace HardwareStore.Controllers
                     if (name == null)
                     {
                         entityName = worksheet.Cells[i, 1].Value.ToString();
-                        entityName = entityName.Substring(0, entityName.LastIndexOf("CATA")).Trim();
                     }
                     else
                     {
-                        // Update
+                        if (!entityName.Contains("CATA"))
+                        {
+                            continue;
+                        }
+
+                        var subEntityName = entityName.Substring(0, entityName.LastIndexOf("CATA")).Trim();
+
+                        // Update thing
                         if (things.Any(x => x.Id == (string)id))
                         {
                             var thing = things.Where(x => x.Id == (string)id).First();
@@ -146,7 +148,7 @@ namespace HardwareStore.Controllers
 
                             _context.Update(thing);
                         }
-                        // Add
+                        // Add thing
                         else
                         {
                             Thing thing = new Thing {
@@ -158,9 +160,10 @@ namespace HardwareStore.Controllers
                             if (Convert.ToString(amount) != "0") thing.Existence = true;
                             else thing.Existence = false;
 
-                            if(_context.Entity.Any(x => x.Name == entityName))
+
+                            if(_context.Entity.Any(x => x.Name == subEntityName))
                             {
-                                var entity = _context.Entity.Include(x => x.Categories).Where(x => x.Name == entityName).First();
+                                var entity = _context.Entity.Include(x => x.Categories).Where(x => x.Name == subEntityName).First();
                                 int categoryId = entity.Categories.Where(x => x.Name == "Void").First().Id;
 
                                 thing.CategoryId = categoryId;

@@ -59,29 +59,28 @@
                                         <h2 class="cart-section__title">Личные данные</h2>
                                     </header>
                                     <div class="cart-section__content" style="height: max-content;">
-                                        <input type="hidden" asp-for="DateCreated" value="@DateTime.Now" class="form-control" />
+                                        <input type="hidden" asp-for="DateCreated" value="@TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Russian Standard Time"))" class="form-control" />
                                         <div class="cart-delivery-methods__label">
-
-                                            <input class="cart-delivery-methods__input" type="text" id="name" asp-for="NameBuyer" />
                                             <label asp-for="NameBuyer">Имя</label>
+                                            <input class="cart-delivery-methods__input" type="text" id="name" asp-for="NameBuyer" />
                                             <span asp-validation-for="NameBuyer" class="text-danger"></span>
                                         </div>
 
                                         <div class="cart-delivery-methods__label">
-                                            <input asp-for="PhoneNumber" class="cart-delivery-methods__input" placeholder="+375 (__) ___-__-__" />
                                             <label asp-for="PhoneNumber" class="control-label"></label>
+                                            <input asp-for="PhoneNumber" class="cart-delivery-methods__input" placeholder="+375 (__) ___-__-__" />
                                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                         </div>
 
                                         <div class="cart-delivery-methods__label">
-                                            <input asp-for="Email" class="cart-delivery-methods__input" />
                                             <label asp-for="Email" class="control-label"></label>
+                                            <input asp-for="Email" class="cart-delivery-methods__input" />
                                             <span asp-validation-for="Email" class="text-danger"></span>
                                         </div>
 
                                         <div class="cart-delivery-methods__label">
-                                            <select asp-for="DeliveryMethod" class="cart-delivery-methods__input" asp-items="deliveryMethods"></select>
                                             <label asp-for="DeliveryMethod" class="control-label"></label>
+                                            <select asp-for="DeliveryMethod" class="cart-delivery-methods__input" asp-items="deliveryMethods"></select>
                                         </div>
 
                                     </div>

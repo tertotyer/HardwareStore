@@ -51,7 +51,7 @@ namespace HardwareStore.Controllers
             ViewData["Entities"] = await _context.Entity.Include(x => x.Categories).ToListAsync();
 
             var things = from t in _context.Thing.Include(x=>x.Category) 
-                         where t.Category.EntityId == id where t.Existence == true select t;
+                         where t.Category.EntityId == id where t.Existence == true where t.Category.Name != "Void" select t;
             if (!String.IsNullOrWhiteSpace(searchName))
             {
                 things = things.Where(t => t.Name.Contains(searchName));
@@ -118,7 +118,9 @@ namespace HardwareStore.Controllers
             {
                 return NotFound();
             }
-            return View(entity);
+
+            var entityModel = new EntityCreateViewModel { Id = entity.Id, Name = entity.Name };
+            return View(entityModel);
         }
 
         // POST: Entities/Edit/5
@@ -126,9 +128,9 @@ namespace HardwareStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Entity entity)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Image")] EntityCreateViewModel entityCreateModel)
         {
-            if (id != entity.Id)
+            if (id != entityCreateModel.Id)
             {
                 return NotFound();
             }
@@ -137,12 +139,36 @@ namespace HardwareStore.Controllers
             {
                 try
                 {
+                    var entity = _context.Entity.Find(entityCreateModel.Id);
+                    entity.Name = entityCreateModel.Name;
+
+                    if (entityCreateModel.Image != null)
+                    {
+                        if(entity.ImagePath != null)
+                        {
+                            var imagePath = entity.ImagePath;
+                            if (System.IO.File.Exists("wwwroot/images/entities/" + imagePath))
+                            {
+                                System.IO.File.Delete("wwwroot/images/entities/" + imagePath);
+                            }
+                        }
+
+                        string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images/entities");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + entityCreateModel.Image.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using var fstr = new FileStream(filePath, FileMode.Create);
+                        entityCreateModel.Image.CopyTo(fstr);
+
+                        entity.ImagePath = uniqueFileName;
+                    }
+
                     _context.Update(entity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EntityExists(entity.Id))
+                    if (!EntityExists(entityCreateModel.Id))
                     {
                         return NotFound();
                     }
@@ -153,7 +179,7 @@ namespace HardwareStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(entity);
+            return View(entityCreateModel);
         }
 
         // GET: Entities/Delete/5

@@ -69,7 +69,7 @@ namespace HardwareStore.Controllers
             {
                 _context.Add(characteristic);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Things", new { id = characteristic.ThingId });
+                return RedirectToAction("Create", new { sendThingId = characteristic.ThingId});
             }
             ViewData["ThingId"] = new SelectList(_context.Thing, "Id", "Name", characteristic.ThingId);
             return View(characteristic);
