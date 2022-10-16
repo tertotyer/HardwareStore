@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
     var deliveryMethods = new SelectList(new string[] { "Самовывоз", "Доставка курьером" });
     int totalCost = 0;
+    int totalQuantity = 0;
 }
 
 @if (ViewBag.CartItems != null)
@@ -20,24 +21,32 @@
                 <div class="basket__list">
                     @foreach (var cartItem in ViewBag.CartItems)
                     {
-                        totalCost += cartItem.Thing.Price;
+                        totalQuantity += cartItem.Quantity;
+                        totalCost += cartItem.Thing.Price * cartItem.Quantity;
                         string imagePath = $"~/images/things/{cartItem.ImagePath}";
-                        <p>@cartItem.Thing.Name @cartItem.Thing.Price @cartItem.ImagePath</p>
 
                         <div class="basket__item section__bottom-border">
                             <div class="basket__item-column basket__item-column-left">
                                 <div class="basket__item-img">
                                     <img src="@imagePath" asp-append-version="true" />          <!-- Превью товара-->
                                 </div>
+
+                                <input type="hidden" name="thingId" value="@cartItem.ThingId">
+
                                 <div class="basket__item-title">
+                                    <!-- Имя товара-->
                                     <a asp-action="Details" asp-controller="Things" asp-route-id="@cartItem.ThingId">
-                                        @cartItem.Thing.Name                                        <!-- Имя товара-->
+                                        @cartItem.Thing.Name
                                     </a>
                                 </div>
                             </div>
                             <div class="basket__item-column basket__item-column-right">
                                 <div class="basket__item-count">
-                                    <input type="number" min="0" class="basket__item-count-input" value="@cartItem.Quantity"> <!-- Инпут поле количества товаров-->
+
+                                    <input onchange="UpdateQuantity(this.name, this.value)"
+                               type="number" min="0" class="basket__item-count-input" 
+                               value="@cartItem.Quantity" name="@cartItem.ThingId"> <!-- Инпут поле количества товаров-->
+
                                 </div>
                                 <div class="basket__item-price currency">
                                     @cartItem.Thing.Price руб                                      <!-- Цена товара-->
@@ -88,25 +97,23 @@
                             </div>
                             <div class="basket__total">
                                 <div class="basket__total-count-wrapper">
-                                    <div class="basket__total-count">@ViewBag.CartItems.Count</div> <!-- Всего товаров в корзине -->
+                                    <div class="basket__total-count">@totalQuantity</div> <!-- Всего товаров в корзине -->
                                     <div class="basket__total-count-desc">Товаров</div>
                                 </div>
                                 <div class="basket__total-price-wrapper">
                                     <div class="basket__total-price">@totalCost</div> <!-- Полная стоимость корзины -->
                                     <div class="basket__total-price-desc">Рублей</div>
                                 </div>
-                                <!-- Кнопка оформить заказ -->
                                 <input type="submit" value="Оформить" class="basket__button-continue button" />
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
-
         </section>
     }
-    else{
+    else
+    {
         @await Html.PartialAsync("_CreateEmpty")
     }
 }
@@ -114,3 +121,12 @@ else
 {
     @await Html.PartialAsync("_CreateEmpty")
 }
+
+@section Scripts
+    {
+    <script>
+        function UpdateQuantity(id, count) {
+            window.location.href = "../Cart/ChangeItemQuantity?id=" + id + "&quantity=" + count;
+        }
+    </script>
+} 

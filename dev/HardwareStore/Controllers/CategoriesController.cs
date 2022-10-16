@@ -63,10 +63,19 @@ namespace HardwareStore.Controllers
                 things = things.Where(t => t.Price >= minPrice && t.Price <= maxPrice + maxPrice / 10).OrderBy(t => t.Price);
             }
 
-            int pageSize = 9;
-            return View(await PaginatedList<Thing>.CreateAsync(things
-                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize));
-            //return View(things.Include(x => x.Images).ToList());
+            int pageSize = 12;
+            var model = await PaginatedList<Thing>.CreateAsync(things
+                .Include(t => t.Images).AsNoTracking(), pageNumber ?? 1, pageSize);
+
+            if (model == null)
+            {
+                if (pageNumber != 1 && pageNumber != null)
+                {
+                    return NotFound();
+                }
+                return View(new PaginatedList<Thing>());
+            }
+            return View(model);
         }
 
         // GET: Categories/Create

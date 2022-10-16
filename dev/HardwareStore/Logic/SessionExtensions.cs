@@ -24,7 +24,7 @@ namespace HardwareStore.Logic
             session.SetObject(key, arr);
         }
 
-        public static void RemoveObject<T>(this ISession session, string key, ref T value)
+        public static void RemoveObject<T>(this ISession session, string key, T value)
         {
             var arr = session.GetObject<List<T>>(key);
             if(arr != null)

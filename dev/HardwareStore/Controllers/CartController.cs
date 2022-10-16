@@ -30,14 +30,23 @@ namespace HardwareStore.Controllers
                 return NotFound();
             }
 
-            var cartItem = new CartItemSession
+            var cartItems = HttpContext.Session.GetObject<List<CartItemSession>>("cart") ?? new List<CartItemSession>();
+            if (cartItems.Any(x => x.ThingId == id))
             {
-                ThingId = id,
-                Thing = await _context.Thing.FindAsync(id),
-                ImagePath = imagePath
-            };
+                cartItems.Where(x => x.ThingId == id).First().Quantity += 1;
+                HttpContext.Session.SetObject("cart", cartItems);
+            }
+            else
+            {
+                var cartItem = new CartItemSession
+                {
+                    ThingId = id,
+                    Thing = await _context.Thing.FindAsync(id),
+                    ImagePath = imagePath
+                };
+                HttpContext.Session.AddObject("cart", cartItem);
+            }
 
-            HttpContext.Session.AddObject("cart", cartItem);
 
             return RedirectToAction("Create", "Orders");
         }
@@ -50,7 +59,7 @@ namespace HardwareStore.Controllers
             }
 
             var cartItem = HttpContext.Session.GetObject<List<CartItemSession>>("cart").Where(x => x.ThingId == id).First();
-            HttpContext.Session.RemoveObject("cart", ref cartItem);
+            HttpContext.Session.RemoveObject("cart", cartItem);
 
             return RedirectToAction("Create", "Orders");
         }

@@ -86,13 +86,11 @@
 }
 
 .cart-delivery-methods__input__left {
-    width: 110px;
     border-radius: 8px 2px 2px 8px;
     margin-right: 2px;
 }
 
 .cart-delivery-methods__input__right {
-    width: 110px;
     border-radius: 2px 8px 8px 2px;
 }
 

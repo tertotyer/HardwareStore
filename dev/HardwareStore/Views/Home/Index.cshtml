@@ -63,5 +63,29 @@
     </div>
 </section>
 
+<div id="popup__order-complete" class="popup">
+    <div class="popup__body">
+        <div class="popup__content">
+            <a class="popup__close close-popup basket__item-delete"></a>
+            <div class="popup__title">Ваш заказ принят</div>
+            <div class="popup__text">Ожидайте звонка оператора</div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts
+    {
+    <script>
+        if (@ViewBag.OpenPopup != null)
+        {
+            window.onload = function () {
+            popupOpen();
+        };
+
+        }
+    </script>
+}*@
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <script src="~/scripts/swiper-main.js"></script>
+<script src="~/scripts/popup.js"></script>

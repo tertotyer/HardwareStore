@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var totalCost = 0;
 }
 
 <h1>Details</h1>
@@ -44,10 +46,14 @@
             <br />
             @foreach (var cartItem in Model.CartItems)
             {
-                <a asp-action="Details" asp-controller="Things" asp-route-id="@cartItem.ThingId">@cartItem.Thing.Name - @cartItem.Quantity </a> <br />
+                totalCost += cartItem.Thing.Price * cartItem.Quantity;
+                <a asp-action="Details" asp-controller="Things" asp-route-id="@cartItem.ThingId">@cartItem.Thing.Name - @cartItem.Quantity - @cartItem.Thing.Price</a> <br />
             }
         </dd>
     </dl>
+    <br />
+    <p>TotalCost : @totalCost</p>
+    <br />
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

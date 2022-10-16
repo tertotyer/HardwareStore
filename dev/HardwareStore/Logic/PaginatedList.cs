@@ -15,6 +15,10 @@ namespace HardwareStore.Logic
             AddRange(items);
         }
 
+        public PaginatedList()
+        {
+        }
+
         public bool HasPreviousPage => PageIndex > 1;
 
         public bool HasNextPage => PageIndex < TotalPages;
@@ -23,6 +27,10 @@ namespace HardwareStore.Logic
         {
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            if (items.Count == 0)
+            {
+                return null;
+            }
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

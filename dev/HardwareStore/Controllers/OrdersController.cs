@@ -13,6 +13,7 @@ using NuGet.Packaging;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using HardwareStore.ViewModels;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HardwareStore.Controllers
 {
@@ -83,7 +84,9 @@ namespace HardwareStore.Controllers
                 HttpContext.Session.Clear();
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index", "Home");
+                ViewBag.Order = "Ordered :)";
+                return Redirect("../#popup__order-complete");
+                //return RedirectToAction("Index", "Home", new { id = 1 });
             }
 
             ViewData["CartItems"] = HttpContext.Session.GetObject<List<CartItemSession>>("cart");
